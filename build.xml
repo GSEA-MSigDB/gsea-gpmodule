@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2003-2017 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+-->
+
+<project basedir="" default="create-zip" name="GSEA">
+	<property name="dirOffset" value="../common_module_code/" />
+	<import file="${dirOffset}/commontargets.xml" />
+
+	<target depends="init" name="_init">
+		<mkdir dir="build" />
+		<property name="appfile" value="gp-gsea.jar" />
+		<property name="inclds" value="org/genepattern/modules/gsea/*.java" />
+		<path id="library.classpath">
+			<fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
+            <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
+		</path>
+		<property name="java.target" value="1.8" />
+	</target>
+
+	<target name="package" depends="_init, clean, compile">
+		<jar basedir="build" defaultexcludes="true" includes="org/**" jarfile="${appfile}">
+		</jar>
+	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="build" includes="org/**" />
+		</delete>
+	</target>
+
+	<target name="compile" depends="_init">
+		<javac debug="true" defaultexcludes="true" deprecation="true" destdir="build" includes="${inclds}" optimize="false" proceed="false" srcdir="src" target="${java.target}" source="${java.target}">
+			<classpath refid="library.classpath" />
+		</javac>
+	</target>
+
+	<target depends="package" name="create-zip">
+		<antcall target="prezip" />
+		<zip destfile="${dest.dir}/${ant.project.name}.zip" whenempty="fail" defaultexcludes="true">
+			<fileset dir="." includes="manifest, *.html, *.json, ${appfile}" />
+			<fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
+            <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
+		</zip>
+		<antcall target="postzip" />
+	</target>
+</project>
