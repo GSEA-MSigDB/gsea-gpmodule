@@ -31,9 +31,11 @@ The GSEA project is currently a joint effort of the Broad Institute and the Univ
 
 # Dependencies
 
-The GSEA Desktop and the GSEA module for GenePattern are 100% Pure Java.  Java 8 is required for our pre-built binaries.  Builds against other versions of Java may be possible but are unsupported.  **Oracle Java is recommended as there are known issues when running with OpenJDK.**
+The GSEA module for GenePattern is 100% Pure Java.  Java 8 is required for our pre-built binaries.  Builds against other versions of Java may be possible but are unsupported.  **Oracle Java is recommended as there are known issues when running with OpenJDK.**
 
-See the [LICENSE-3RD-PARTY.txt](LICENSE-3RD-PARTY.txt) file for a full list of the GSEA library dependencies.  In our GSEA Desktop binary builds, all required 3rd party library code is bundled into the single self-contained gsea-3.0.jar file so that no additional downloads or installation are required.  For the GenePattern module, additional library dependencies are included as separate files in the 'lib' directory. 
+See the [LICENSE-3RD-PARTY.txt](LICENSE-3RD-PARTY.txt) file for a list of the module's library dependencies.  The module wraps the GSEA Desktop; see the [GitHub repository](https://github.com/GSEA-MSigDB/gsea-desktop) for its dependencies.
+
+In our GSEA Desktop binary builds, all required 3rd party library code is bundled into the single self-contained gsea-3.0.jar file so that no additional downloads or installation are required.  For the GenePattern module, additional library dependencies are included as separate files in the 'lib' directory. 
 
 ------
 Copyright (c) 2003-2017 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
