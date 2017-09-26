@@ -4,10 +4,16 @@
 -->
 
 <project basedir="" default="create-zip" name="GSEA">
-	<property name="dirOffset" value="../common_module_code/" />
-	<import file="${dirOffset}/commontargets.xml" />
 
-	<target depends="init" name="_init">
+	<property name="dirOffset" value="../common_module_code/" />
+
+    <property name="LSID.noVersion" value="urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072" />
+
+	<target name="init">
+        <tstamp />
+        <property name="test.version" value="999999999"/>
+        <property name="dest.dir" value="build" />
+
 		<mkdir dir="build" />
 		<property name="appfile" value="gp-gsea.jar" />
 		<property name="inclds" value="org/genepattern/modules/gsea/*.java" />
@@ -18,7 +24,17 @@
 		<property name="java.target" value="1.8" />
 	</target>
 
-	<target name="package" depends="_init, clean, compile">
+    <target name="init_prerelease" depends="init">
+        <property name="prereleasingModule" value="true" />
+        <property name="quality.level" value="preproduction" />
+    </target>
+
+    <target name="init_release" depends="init">
+        <property name="prereleasingModule" value="false" />
+        <property name="quality.level" value="production" />
+    </target>
+
+	<target name="package" depends="init, clean, compile">
 		<jar basedir="build" defaultexcludes="true" includes="org/**" jarfile="${appfile}">
 		</jar>
 	</target>
@@ -29,19 +45,74 @@
 		</delete>
 	</target>
 
-	<target name="compile" depends="_init">
+	<target name="compile" depends="init">
 		<javac debug="true" defaultexcludes="true" deprecation="true" destdir="build" includes="${inclds}" optimize="false" proceed="false" srcdir="src" target="${java.target}" source="${java.target}">
 			<classpath refid="library.classpath" />
 		</javac>
 	</target>
 
+    <target name="update-build-props" depends="init">
+        <!-- Increment the build number for use in the LSID -->
+        <propertyfile file="release.properties">
+          <entry key="build.number" type="int" operation="+" pattern="0000" default="0001" />
+          <entry key="build.timestamp" type="date" operation="=" value="${time.stamp}" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+        </propertyfile>
+    </target>
+
+    <target name="load-build-props">
+      <!-- Note that we load the build.properties *after* using the update-build-props task, if at all. -->
+      <property file="release.properties" />
+    </target>
+
 	<target depends="package" name="create-zip">
-		<antcall target="prezip" />
+		<!-- antcall target="prezip" / -->
 		<zip destfile="${dest.dir}/${ant.project.name}.zip" whenempty="fail" defaultexcludes="true">
-			<fileset dir="." includes="manifest, *.html, *.json, ${appfile}" />
+			<fileset dir="." includes="manifest, *.html, *.json, LICENSE.txt, LICENSE-3RD-PARTY.txt, release.properties, ${appfile}" />
 			<fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
             <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
 		</zip>
-		<antcall target="postzip" />
+		<!-- antcall target="postzip" / -->
 	</target>
+	
+    <!-- Bump the build and set the quality flag -->
+    <target name="prereleaseModule" depends="init_prerelease,update-build-props,load-build-props,addLSIDtoManifest,create-zip,resetManifest" />
+	
+    <!-- Bump the build and set the quality flag -->
+    <target name="releaseModule" depends="init_release,update-build-props,load-build-props,addLSIDtoManifest,create-zip,resetManifest" />
+	
+	<!-- Below, to end, imported from common targets and modified here -->
+    <target name="prezip" depends="addLSIDtoManifest">
+        <tstamp />
+    </target>
+
+	<target name="addLSIDtoManifest" depends="init,getLSID">
+        <tstamp>
+            <format property="publish.time" pattern="MM/dd/yyyy HH:mm " />
+        </tstamp>
+
+        <!-- Work on a copy of the manifest to avoid unnecessary churn in version control. -->
+        <copy file="manifest" tofile="manifest.tmp" preservelastmodified="true" overwrite="true" />
+
+		<!-- NOTE: this will overwrite any LSID= already in the manifest file -->
+        <propertyfile file="manifest">
+            <entry key="quality" value="${quality.level}" />
+            <entry key="LSID" value="${LSID}" />
+            <entry key="publicationDate" value="${publish.time}" />
+        </propertyfile>
+    </target>
+
+    <target name="getLSID">
+        <property name="LSID.key" value="${ant.project.name}.lsid" />
+        <condition property="LSID" value="${LSID.noVersion}:${release.version}.${build.number}" else="${LSID.noVersion}:${test.version}">
+            <isset property="release.version" />
+        </condition>
+        <echo>${LSID.key} = ${LSID}</echo>
+    </target>
+
+    <target name="resetManifest">
+        <move file="manifest.tmp" tofile="manifest" preservelastmodified="true" overwrite="true" failonerror="true" />
+    </target>
+
+    <target name="postzip" depends="resetManifest" />
+
 </project>

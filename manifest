@@ -1,6 +1,5 @@
 # Copyright (c) 2003-2017 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 #GSEA
-#Thu Sep 20 08:05:42 EDT 2012
 JVMLevel=1.8
 LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00072\:999999999
 author=Aravind Subramanian, Pablo Tamayo, Broad Institute
@@ -421,7 +420,7 @@ p31_value=false;true
 
 pipelineModel=
 privacy=public
-quality=production
+quality=development
 requiredPatchLSIDs=
 requiredPatchURLs=
 serializedModel=
