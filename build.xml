@@ -7,8 +7,6 @@
 
 	<property name="dirOffset" value="../common_module_code/" />
 
-    <property name="LSID.noVersion" value="urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072" />
-
 	<target name="init">
         <tstamp />
         <property name="test.version" value="999999999"/>
@@ -54,7 +52,7 @@
     <target name="update-build-props" depends="init">
         <!-- Increment the build number for use in the LSID -->
         <propertyfile file="release.properties">
-          <entry key="build.number" type="int" operation="+" pattern="0000" default="0001" />
+          <entry key="build.number" type="int" operation="+" default="1" />
           <entry key="build.timestamp" type="date" operation="=" value="${time.stamp}" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
         </propertyfile>
     </target>
@@ -65,13 +63,11 @@
     </target>
 
 	<target depends="package" name="create-zip">
-		<!-- antcall target="prezip" / -->
 		<zip destfile="${dest.dir}/${ant.project.name}.zip" whenempty="fail" defaultexcludes="true">
 			<fileset dir="." includes="manifest, *.html, *.json, LICENSE.txt, LICENSE-3RD-PARTY.txt, release.properties, ${appfile}" />
 			<fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
             <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
 		</zip>
-		<!-- antcall target="postzip" / -->
 	</target>
 	
     <!-- Bump the build and set the quality flag -->
@@ -80,11 +76,6 @@
     <!-- Bump the build and set the quality flag -->
     <target name="releaseModule" depends="init_release,update-build-props,load-build-props,addLSIDtoManifest,create-zip,resetManifest" />
 	
-	<!-- Below, to end, imported from common targets and modified here -->
-    <target name="prezip" depends="addLSIDtoManifest">
-        <tstamp />
-    </target>
-
 	<target name="addLSIDtoManifest" depends="init,getLSID">
         <tstamp>
             <format property="publish.time" pattern="MM/dd/yyyy HH:mm " />
@@ -112,7 +103,4 @@
     <target name="resetManifest">
         <move file="manifest.tmp" tofile="manifest" preservelastmodified="true" overwrite="true" failonerror="true" />
     </target>
-
-    <target name="postzip" depends="resetManifest" />
-
 </project>
