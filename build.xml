@@ -3,7 +3,7 @@
   Copyright (c) 2003-2017 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 -->
 
-<project basedir="" default="create-zip" name="GSEAPreranked">
+<project basedir="" default="create-zip" name="GSEA">
 
 	<target name="init">
         <tstamp />
