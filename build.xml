@@ -12,7 +12,7 @@
 
 		<mkdir dir="build" />
 		<property name="appfile" value="gp-gsea.jar" />
-		<property name="inclds" value="org/genepattern/modules/gseapreranked/*.java" />
+		<property name="inclds" value="org/genepattern/modules/gsea/*.java" />
 		<path id="library.classpath">
 			<fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
             <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
