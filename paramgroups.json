@@ -1,5 +1,5 @@
 [{name: "Basic parameters", description: "These parameters are essential for the analysis.", parameters: ["expression.dataset", "gene.sets.database", "number.of.permutations", "phenotype.labels", "target.profile", "permutation.type", "collapse.dataset", "chip.platform.file", "output.file.name" ]},
  {name: "Advanced parameters", description: "Additional parameters with standard defaults; typically you will run GSEA with these parameters set to their default values.", hidden: false},
    {name: "Advanced parameters/Algorithmic", hidden: true, parameters: ["scoring.scheme", "metric.for.ranking.genes", "gene.list.sorting.mode", "gene.list.ordering.mode", "max.gene.set.size", "min.gene.set.size", "collapsing.mode.for.probe.sets.with.more.than.one.match", "normalization.mode", "randomization.mode", "omit.features.with.no.symbol.match", "median.for.class.metrics", "number.of.markers", "random.seed", "save.random.ranked.lists", "selected.gene.sets", "dev.mode", "alt.delim"]},
-   {name: "Advanced parameters/Reporting", hidden: true, parameters: ["plot.graphs.for.the.top.sets.of.each.phenotype", "make.detailed.gene.set.report", "create.svgs", "create.gcts"]}
+   {name: "Advanced parameters/Reporting", hidden: true, parameters: ["plot.graphs.for.the.top.sets.of.each.phenotype", "make.detailed.gene.set.report", "create.svgs", "create.gcts", "create.zip"]}
 ]
