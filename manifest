@@ -3,7 +3,7 @@
 JVMLevel=1.8
 LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00072\:999999999
 author=Aravind Subramanian, Pablo Tamayo, Broad Institute
-commandLine=<run-with-env> -u "java/1.8" java <java_flags> \
+commandLine=<java> \
     -Djava.util.prefs.PreferencesFactory\=com.allaboutbalance.articles.disableprefs.DisabledPreferencesFactory \
     -Djava.awt.headless\=true \
     -cp <libdir>commons-lang3-3.4.jar<path.separator><libdir>commons-io-2.4.jar<path.separator><libdir>commons-cli-1.2.jar<path.separator><libdir>gp-gsea.jar<path.separator><libdir>disable-prefs.jar<path.separator><libdir>gsea-3.0.jar \
@@ -462,4 +462,4 @@ serializedModel=
 taskType=Gene List Selection
 category=beta
 userid=eby@broadinstitute.org
-version=Beta series: Updating to use the GSEA v3.0 open-source code base.  Unified the Gene Set DB selector parameters and better downloading of MSigDB files.  Added selected.gene.sets, alt.delim, creat.gcts and create.svgs parameters.  Better temp file clean-up and other internal code improvements.  Open-source release.
+version=set 'commandLine=<java> -Djava.util.p...', workaround for custom job.memory
