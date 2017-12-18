@@ -48,7 +48,7 @@
 		</javac>
 	</target>
 
-    <target name="update-build-props" depends="init">
+    <target name="update-release-props" depends="init">
         <!-- Increment the build number for use in the LSID & version-->
         <propertyfile file="release.properties">
           <entry key="build.number" type="int" operation="+" default="1" />
@@ -56,11 +56,11 @@
         </propertyfile>
     </target>
 
-    <target name="load-build-props">
+    <target name="load-release-props">
       <property file="release.properties" />
     </target>
 
-	<target name="create-zip" depends="addLSIDtoManifest,package">
+	<target name="create-zip" depends="load-release-props,addLSIDtoManifest,package,resetManifest">
 		<zip destfile="${dest.dir}/${ant.project.name}_v${full.version}.zip" whenempty="fail" defaultexcludes="true">
 			<fileset dir="." includes="manifest, *.html, *.json, LICENSE.txt, LICENSE-3RD-PARTY.txt, release.properties, ${appfile}" />
 			<fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
@@ -68,9 +68,9 @@
 		</zip>
 	</target>
 	
-    <target name="prereleaseModule" depends="init_prerelease,update-build-props,load-build-props,create-zip,resetManifest" />
+    <target name="prereleaseModule" depends="init_prerelease,update-release-props,create-zip" />
 	
-    <target name="releaseModule" depends="init_release,update-build-props,load-build-props,create-zip,resetManifest" />
+    <target name="releaseModule" depends="init_release,update-release-props,create-zip" />
 	
 	<target name="addLSIDtoManifest" depends="init,getLSID">
         <tstamp>
