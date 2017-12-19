@@ -130,7 +130,7 @@ p9_optional=
 p9_prefix=
 p9_prefix_when_specified=
 p9_type=java.lang.String
-p9_value=classic;weighted;weighted_p2;weighted_p1.5
+p9_value=classic\=classic Kolmorogrov-Smirnov;weighted;weighted_p2;weighted_p1.5
 
 p10_MODE=
 p10_TYPE=TEXT
