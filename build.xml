@@ -3,22 +3,29 @@
   Copyright (c) 2003-2017 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 -->
 
-<project basedir="" default="create-zip" name="GSEA">
+<project basedir="" default="devReleaseModule" name="GSEA">
 
-	<target name="init">
+    <target name="init">
         <tstamp />
         <property name="test.version" value="999999999"/>
         <property name="dest.dir" value="build" />
 
-		<mkdir dir="build" />
-		<property name="appfile" value="gp-gsea.jar" />
-		<property name="inclds" value="org/genepattern/modules/gsea/*.java" />
-		<path id="library.classpath">
-			<fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
+        <mkdir dir="build" />
+        <property name="appfile" value="gp-gsea.jar" />
+        <property name="inclds" value="org/genepattern/modules/gsea/*.java" />
+        <path id="library.classpath">
+            <fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
             <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
-		</path>
-		<property name="java.target" value="1.8" />
-	</target>
+        </path>
+        <property name="java.target" value="1.8" />
+    </target>
+
+    <target name="init_devrelease" depends="init">
+    	<!-- Set the full.version property so that it doesn't come in from release.properties -->
+        <property name="full.version" value="DEV_BUILD" />    	
+        <property name="prereleasingModule" value="false" />
+        <property name="quality.level" value="development" />
+    </target>
 
     <!-- Bump the build number and set the quality flag if we're doing a prerelease or release -->
     <target name="init_prerelease" depends="init">
@@ -31,22 +38,22 @@
         <property name="quality.level" value="production" />
     </target>
 
-	<target name="package" depends="init, clean, compile">
-		<jar basedir="build" defaultexcludes="true" includes="org/**" jarfile="${appfile}">
-		</jar>
-	</target>
+    <target name="package" depends="init, clean, compile">
+        <jar basedir="build" defaultexcludes="true" includes="org/**" jarfile="${appfile}">
+        </jar>
+    </target>
 
-	<target name="clean">
-		<delete>
-			<fileset dir="build" includes="org/**" />
-		</delete>
-	</target>
+    <target name="clean">
+        <delete>
+            <fileset dir="build" includes="org/**" />
+        </delete>
+    </target>
 
-	<target name="compile" depends="init">
-		<javac debug="true" defaultexcludes="true" deprecation="true" destdir="build" includes="${inclds}" optimize="false" proceed="false" srcdir="src" target="${java.target}" source="${java.target}">
-			<classpath refid="library.classpath" />
-		</javac>
-	</target>
+    <target name="compile" depends="init">
+        <javac debug="true" defaultexcludes="true" deprecation="true" destdir="build" includes="${inclds}" optimize="false" proceed="false" srcdir="src" target="${java.target}" source="${java.target}">
+            <classpath refid="library.classpath" />
+        </javac>
+    </target>
 
     <target name="update-release-props" depends="init">
         <!-- Increment the build number for use in the LSID & version-->
@@ -60,19 +67,21 @@
       <property file="release.properties" />
     </target>
 
-	<target name="create-zip" depends="load-release-props,addLSIDtoManifest,package">
-		<zip destfile="${dest.dir}/${ant.project.name}_v${full.version}.zip" whenempty="fail" defaultexcludes="true">
-			<fileset dir="." includes="manifest, *.html, *.json, LICENSE.txt, LICENSE-3RD-PARTY.txt, release.properties, ${appfile}" />
-			<fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
+    <target name="create-zip" depends="addLSIDtoManifest,package">
+        <zip destfile="${dest.dir}/${ant.project.name}_v${full.version}.zip" whenempty="fail" defaultexcludes="true">
+            <fileset dir="." includes="manifest, *.html, *.json, LICENSE.txt, LICENSE-3RD-PARTY.txt, release.properties, ${appfile}" />
+            <fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
             <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
-		</zip>
-	</target>
-	
-    <target name="prereleaseModule" depends="init_prerelease,update-release-props,create-zip,resetManifest" />
-	
-    <target name="releaseModule" depends="init_release,update-release-props,create-zip,resetManifest" />
-	
-	<target name="addLSIDtoManifest" depends="init,getLSID">
+        </zip>
+    </target>
+
+    <target name="devReleaseModule" depends="init_devrelease,load-release-props,create-zip,resetManifest" />
+
+    <target name="prereleaseModule" depends="init_prerelease,update-release-props,load-release-props,create-zip,resetManifest" />
+    
+    <target name="releaseModule" depends="init_release,update-release-props,load-release-props,create-zip,resetManifest" />
+    
+    <target name="addLSIDtoManifest" depends="init,getLSID">
         <tstamp>
             <format property="publish.time" pattern="MM/dd/yyyy HH:mm " />
         </tstamp>
@@ -80,7 +89,7 @@
         <!-- Work on a copy of the manifest to avoid unnecessary churn in version control. -->
         <copy file="manifest" tofile="manifest.tmp" preservelastmodified="true" overwrite="true" />
 
-		<!-- NOTE: this will overwrite any LSID already in the manifest file -->
+        <!-- NOTE: this will overwrite any LSID already in the manifest file -->
         <propertyfile file="manifest">
             <entry key="quality" value="${quality.level}" />
             <entry key="LSID" value="${LSID}" />
@@ -90,11 +99,11 @@
 
     <target name="getLSID">
         <property name="LSID.key" value="${ant.project.name}.lsid" />
-    	<condition property="full.version" value="${release.version}.${build.number}" else="DEV_BUILD">
+        <condition property="full.version" value="${release.version}.${build.number}" else="DEV_BUILD">
             <isset property="release.version" />
-    	</condition>
+        </condition>
         <condition property="LSID" value="${LSID.noVersion}:${full.version}" else="${LSID.noVersion}:${test.version}">
-            <isset property="release.version" />
+            <not><equals arg1="${full.version}" arg2="DEV_BUILD" /></not>
         </condition>
         <echo>${LSID.key} = ${LSID}</echo>
     </target>
