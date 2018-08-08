@@ -1,3 +1,5 @@
 /bin/
 /build/
 /gp-gsea.jar
+/gpunit_*/test_runs
+/gpunit_*/gpunit.runtime_*.properties

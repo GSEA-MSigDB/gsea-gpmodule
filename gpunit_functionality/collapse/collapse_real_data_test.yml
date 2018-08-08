@@ -1,0 +1,49 @@
+# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:19
+module: GSEA
+name: GSEA collapse_real_data_test
+description: Test the GSEA 'collapse dataset' function.  Variation of user_gene_set_test.
+params:
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53_hgu95av2.gct"
+       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v19/input/c1.symbols.reduced.gmt" ]
+       number.of.permutations: "10"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53.cls"
+       target.profile: ""
+       permutation.type: "phenotype"
+       collapse.dataset: "true"
+       chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v19/input/HG_U95Av2.chip"
+       # Modifying the ZIP name here so that the diffCmd can find the RNK inside.  We could modify the diffCmd 
+       # to be able to find it, but that makes the code somewhat complicated. 
+       output.file.name: "P53_hgu95av2_collapsed_to_symbols.zip"
+       scoring.scheme: "weighted"
+       metric.for.ranking.genes: "Signal2Noise"
+       gene.list.sorting.mode: "real"
+       gene.list.ordering.mode: "descending"
+       max.gene.set.size: "500"
+       min.gene.set.size: "15"
+       collapsing.mode.for.probe.sets.with.more.than.one.match: "Max_probe"
+       normalization.mode: "meandiv"
+       randomization.mode: "no_balance"
+       omit.features.with.no.symbol.match: "true"
+       median.for.class.metrics: "false"
+       number.of.markers: "100"
+       # Note that we use a fixed random seed rather than the 'timestamp' default so that we'll have reproducible test results
+       random.seed: "149"
+       create.svgs: "false"
+       create.gcts: "false"
+       save.random.ranked.lists: "false"
+       plot.graphs.for.the.top.sets.of.each.phenotype: "20"
+       make.detailed.gene.set.report: "false"
+       selected.gene.sets: ""
+       dev.mode: "true"
+       alt.delim: ""
+       create.zip: "true"
+assertions:
+        jobStatus: success
+        files:
+            "P53_hgu95av2_collapsed_to_symbols.zip":
+                # Note that we can't simply use the basic/simple_real_data_test result file as these will *not* be identical due
+                # to some embedding of names.  I could make a more clever diffCmd to account for this, but it's simpler to just
+                # save a different result file.  However, I have manually verified that the contents are identical.
+                diffCmd: ../diffGseaResults.sh
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/collapse/collapse_real_data_test/P53_hgu95av2_collapsed_to_symbols.zip"

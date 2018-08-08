@@ -1,0 +1,44 @@
+# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:15
+module: GSEA
+name: GSEA GSE7562_test
+description: Testing with the GSE7562 dataset and (mostly) default param settings.  Part of a breadth-oriented test suite
+params:
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/GSE7562.gct"
+       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/c1.all.v6.0.symbols.gmt" ]
+       number.of.permutations: "1000"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/GSE7562.cls"
+       target.profile: ""
+       permutation.type: "gene_set"
+       collapse.dataset: "false"
+       #chip.platform.file: 
+       output.file.name: "<expression.dataset_basename>.zip"
+       scoring.scheme: "weighted"
+       metric.for.ranking.genes: "Signal2Noise"
+       gene.list.sorting.mode: "real"
+       gene.list.ordering.mode: "descending"
+       max.gene.set.size: "500"
+       min.gene.set.size: "15"
+       collapsing.mode.for.probe.sets.with.more.than.one.match: "Max_probe"
+       normalization.mode: "meandiv"
+       randomization.mode: "no_balance"
+       omit.features.with.no.symbol.match: "true"
+       median.for.class.metrics: "false"
+       number.of.markers: "100"
+       # Note that we use a fixed random seed rather than the 'timestamp' default so that we'll have reproducible test results
+       random.seed: "149"
+       create.svgs: "false"
+       create.gcts: "false"
+       save.random.ranked.lists: "false"
+       plot.graphs.for.the.top.sets.of.each.phenotype: "20"
+       make.detailed.gene.set.report: "false"
+       selected.gene.sets: ""
+       dev.mode: "true"
+       alt.delim: ""
+       create.zip: "true"
+assertions:
+        jobStatus: success
+        files:
+            "GSE7562.zip":
+                diffCmd: ../diffGseaResults.sh
+                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/GEO/GSE7562_test/GSE7562.zip"

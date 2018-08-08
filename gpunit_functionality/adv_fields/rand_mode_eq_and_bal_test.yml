@@ -1,0 +1,44 @@
+# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:19
+module: GSEA
+name: GSEA rand_mode_eq_and_bal_test
+description: Test GSEA using randomization.mode=equalize_and_balance.  Variation of user_gene_set_test.
+params:
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53_collapsed_symbols.gct"
+       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v19/input/c1.symbols.reduced.gmt" ]
+       number.of.permutations: "10"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53.cls"
+       target.profile: ""
+       permutation.type: "phenotype"
+       collapse.dataset: "false"
+       #chip.platform.file: 
+       output.file.name: "<expression.dataset_basename>.zip"
+       scoring.scheme: "weighted"
+       metric.for.ranking.genes: "Signal2Noise"
+       gene.list.sorting.mode: "real"
+       gene.list.ordering.mode: "descending"
+       max.gene.set.size: "500"
+       min.gene.set.size: "15"
+       collapsing.mode.for.probe.sets.with.more.than.one.match: "Max_probe"
+       normalization.mode: "meandiv"
+       randomization.mode: "equalize_and_balance"
+       omit.features.with.no.symbol.match: "true"
+       median.for.class.metrics: "false"
+       number.of.markers: "100"
+       # Note that we use a fixed random seed rather than the 'timestamp' default so that we'll have reproducible test results
+       random.seed: "149"
+       create.svgs: "false"
+       create.gcts: "false"
+       save.random.ranked.lists: "false"
+       plot.graphs.for.the.top.sets.of.each.phenotype: "20"
+       make.detailed.gene.set.report: "false"
+       selected.gene.sets: ""
+       dev.mode: "true"
+       alt.delim: ""
+       create.zip: "true"
+assertions:
+        jobStatus: success
+        files:
+            "P53_collapsed_symbols.zip":
+                diffCmd: ../diffGseaResults.sh
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/adv_fields/rand_mode_eq_and_bal_test/P53_collapsed_symbols.zip"
