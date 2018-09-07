@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2003-2017 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+  Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 -->
 
 <project basedir="" default="devReleaseModule" name="GSEA">
+    <property name="main-class" value="org.genepattern.modules.gsea.GseaWrapper" />
+    <path id="library.classpath">
+        <fileset dir="lib" id="module.lib" includes="*.jar" />
+    </path>
+    <pathconvert property="class-path" pathsep=" " refid="library.classpath">
+        <flattenmapper />
+    </pathconvert>
 
     <target name="init">
         <tstamp />
@@ -11,12 +18,8 @@
         <property name="dest.dir" value="build" />
 
         <mkdir dir="build" />
-        <property name="appfile" value="gp-gsea.jar" />
+        <property name="appfile" value="${ant.project.name}_gp.jar" />
         <property name="inclds" value="org/genepattern/modules/gsea/*.java" />
-        <path id="library.classpath">
-            <fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
-            <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
-        </path>
         <property name="java.target" value="1.8" />
     </target>
 
@@ -40,6 +43,10 @@
 
     <target name="package" depends="init, clean, compile">
         <jar basedir="build" defaultexcludes="true" includes="org/**" jarfile="${appfile}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}" />
+                <attribute name="Class-Path" value="${class-path}" />
+            </manifest>
         </jar>
     </target>
 
@@ -70,8 +77,7 @@
     <target name="create-zip" depends="addLSIDtoManifest,package">
         <zip destfile="${dest.dir}/${ant.project.name}_v${full.version}.zip" whenempty="fail" defaultexcludes="true">
             <fileset dir="." includes="manifest, *.html, *.json, LICENSE.txt, LICENSE-3RD-PARTY.txt, release.properties, ${appfile}" />
-            <fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
-            <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
+            <fileset dir="lib" includes="*.jar" />
         </zip>
     </target>
 
