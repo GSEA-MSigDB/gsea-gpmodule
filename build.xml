@@ -8,6 +8,7 @@
     <path id="library.classpath">
         <fileset dir="lib" id="module.lib" includes="*.jar" />
     </path>
+    <property name="class-path" value="log4j-core-2.11.0.jar batik-codec-1.10.jar commons-cli-1.2.jar commons-io-2.4.jar commons-lang3-3.4.jar disable-prefs.jar gsea-snapshot.jar" />
     <pathconvert property="class-path" pathsep=" " refid="library.classpath">
         <flattenmapper />
     </pathconvert>
