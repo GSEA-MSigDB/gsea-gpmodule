@@ -4,24 +4,19 @@
 -->
 
 <project basedir="" default="devReleaseModule" name="GSEA">
-    <property name="main-class" value="org.genepattern.modules.gsea.GseaWrapper" />
-    <path id="library.classpath">
-        <fileset dir="lib" id="module.lib" includes="*.jar" />
-    </path>
-    <property name="class-path" value="log4j-core-2.11.0.jar batik-codec-1.10.jar commons-cli-1.2.jar commons-io-2.4.jar commons-lang3-3.4.jar disable-prefs.jar gsea-snapshot.jar" />
-    <pathconvert property="class-path" pathsep=" " refid="library.classpath">
-        <flattenmapper />
-    </pathconvert>
+    <property name="main-class" value="org.genepattern.modules.GseaWrapper" />
 
     <target name="init">
         <tstamp />
         <property name="test.version" value="999999999"/>
         <property name="dest.dir" value="build" />
-
         <mkdir dir="build" />
-        <property name="appfile" value="${ant.project.name}_gp.jar" />
-        <property name="inclds" value="org/genepattern/modules/gsea/*.java" />
-        <property name="java.target" value="1.8" />
+    	
+    	<!-- Libs to include in the ZIP.  Note that module_jars, lib_patch_jars, and args_file select nothing; these are used by the Java 11 build only. -->
+        <zipfileset id="lib_jars" dir="lib" includes="*.jar" prefix="lib" />
+        <zipfileset id="module_jars" dir="." excludes="**/*" prefix="" />
+        <zipfileset id="lib_patch_jars" dir="." excludes="**/*" prefix="" />
+        <zipfileset id="args_file" dir="." excludes="**/*" prefix="" />
     </target>
 
     <target name="init_devrelease" depends="init">
@@ -29,6 +24,24 @@
         <property name="full.version" value="DEV_BUILD" />    	
         <property name="prereleasingModule" value="false" />
         <property name="quality.level" value="development" />
+    </target>
+
+    <target name="init_java11_devrelease" depends="init">
+        <property name="full.version" value="DEV_BUILD_JAVA_11" />
+        <property name="prereleasingModule" value="false" />
+        <property name="quality.level" value="development" />
+        <!-- Set the launcher property for Java 11 -->
+        <property name="launcher" value='--module-path="&lt;libdir&gt;/modules" @"&lt;libdir&gt;/gsea.args" --patch-module="jide.common=&lt;libdir&gt;/lib/jide-components-3.7.4.jar:&lt;libdir&gt;/lib/jide-dock-3.7.4.jar:&lt;libdir&gt;/lib/jide-grids-3.7.4.jar" --module=org.gsea_msigdb.gsea/${main-class}' />
+    	
+    	<!-- Include the extra libs needed for a Java 11 build.  These are required for modularity dependencies. -->
+    	<property environment="env" />
+    	<condition property="check_GSEA_REPO_HOME"> <isset property="env.GSEA_REPO_HOME" /> </condition>
+    	<fail unless="${check_GSEA_REPO_HOME}" message="Please set the GSEA_REPO_HOME environment variable to your local GSEA Git repository location." />
+    	
+        <zipfileset id="lib_jars" dir="lib" includes="*.jar" prefix="modules" />
+        <zipfileset id="lib_patch_jars" dir="${env.GSEA_REPO_HOME}/lib" includes="*.jar" prefix="lib" />
+        <zipfileset id="module_jars" dir="${env.GSEA_REPO_HOME}/modules" includes="*.jar" prefix="modules" />
+        <zipfileset id="args_file" file="${env.GSEA_REPO_HOME}/scripts/java11/gsea.args" prefix="" />
     </target>
 
     <!-- Bump the build number and set the quality flag if we're doing a prerelease or release -->
@@ -42,25 +55,10 @@
         <property name="quality.level" value="production" />
     </target>
 
-    <target name="package" depends="init, clean, compile">
-        <jar basedir="build" defaultexcludes="true" includes="org/**" jarfile="${appfile}">
-            <manifest>
-                <attribute name="Main-Class" value="${main-class}" />
-                <attribute name="Class-Path" value="${class-path}" />
-            </manifest>
-        </jar>
-    </target>
-
     <target name="clean">
         <delete>
-            <fileset dir="build" includes="org/**" />
+            <fileset dir="build" includes="org/**,manifest" />
         </delete>
-    </target>
-
-    <target name="compile" depends="init">
-        <javac debug="true" defaultexcludes="true" deprecation="true" destdir="build" includes="${inclds}" optimize="false" proceed="false" srcdir="src" target="${java.target}" source="${java.target}">
-            <classpath refid="library.classpath" />
-        </javac>
     </target>
 
     <target name="update-release-props" depends="init">
@@ -75,18 +73,24 @@
       <property file="release.properties" />
     </target>
 
-    <target name="create-zip" depends="addLSIDtoManifest,package">
-        <zip destfile="${dest.dir}/${ant.project.name}_v${full.version}.zip" whenempty="fail" defaultexcludes="true">
-            <fileset dir="." includes="manifest, *.html, *.json, LICENSE.txt, LICENSE-3RD-PARTY.txt, release.properties, ${appfile}" />
-            <fileset dir="lib" includes="*.jar" />
+    <target name="create-zip" depends="init,clean,addLSIDtoManifest,addLauncherToManifest">
+        <zip destfile="${dest.dir}/${ant.project.name}_v${full.version}.zip" whenempty="fail" defaultexcludes="true" duplicate="preserve">
+            <fileset dir="." includes="*.html, *.json, LICENSE*.txt, release.properties" />
+        	<fileset dir="${dest.dir}" includes="manifest" />
+        	<zipfileset refid="lib_jars" />
+            <zipfileset refid="module_jars" />
+            <zipfileset refid="lib_patch_jars" />
+            <zipfileset refid="args_file" />
         </zip>
     </target>
 
-    <target name="devReleaseModule" depends="init_devrelease,load-release-props,create-zip,resetManifest" />
+    <target name="devReleaseModule" depends="init_devrelease,load-release-props,create-zip" />
 
-    <target name="prereleaseModule" depends="init_prerelease,update-release-props,load-release-props,create-zip,resetManifest" />
+    <target name="devJava11ReleaseModule" depends="init_java11_devrelease,load-release-props,create-zip" />
+
+    <target name="prereleaseModule" depends="init_prerelease,update-release-props,load-release-props,create-zip" />
     
-    <target name="releaseModule" depends="init_release,update-release-props,load-release-props,create-zip,resetManifest" />
+    <target name="releaseModule" depends="init_release,update-release-props,load-release-props,create-zip" />
     
     <target name="addLSIDtoManifest" depends="init,getLSID">
         <tstamp>
@@ -94,10 +98,10 @@
         </tstamp>
 
         <!-- Work on a copy of the manifest to avoid unnecessary churn in version control. -->
-        <copy file="manifest" tofile="manifest.tmp" preservelastmodified="true" overwrite="true" />
+        <copy file="manifest" tofile="${dest.dir}/manifest" preservelastmodified="true" overwrite="true" />
 
         <!-- NOTE: this will overwrite any LSID already in the manifest file -->
-        <propertyfile file="manifest">
+        <propertyfile file="${dest.dir}/manifest">
             <entry key="quality" value="${quality.level}" />
             <entry key="LSID" value="${LSID}" />
             <entry key="publicationDate" value="${publish.time}" />
@@ -115,7 +119,9 @@
         <echo>${LSID.key} = ${LSID}</echo>
     </target>
 
-    <target name="resetManifest">
-        <move file="manifest.tmp" tofile="manifest" preservelastmodified="true" overwrite="true" failonerror="true" />
-    </target>
+	<target name="addLauncherToManifest">
+		<!-- Ordinarily, we wuld just include this directly in the manifest.  Doing it this way allows us to do Java 11 builds. -->
+		<property name="launcher" value='-cp "&lt;libdir&gt;/lib/*" ${main-class}' />
+		<replace file="${dest.dir}/manifest" token="@LAUNCHER@" value="${launcher}" />
+	</target>
 </project>
