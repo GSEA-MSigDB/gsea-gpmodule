@@ -40,5 +40,6 @@ assertions:
         jobStatus: fail
         files:
             "stderr.txt":
-                diffCmd: ../diffFirstLineOnly.sh
+                diffCmd: ../grepMessage.sh xtools.api.param.BadParamException:.One.of.the.classes.in.this.dataset.has.too.few.samples.in.one.of.the.classes.of.the.dataset.to.use.this.metric
+                # The following file is unused; keeping it just for reference.
                 diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/phenotype_cls/invalid_too_few_samples_test/stderr.txt"

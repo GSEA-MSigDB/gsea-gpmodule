@@ -30,8 +30,10 @@
         <property name="full.version" value="DEV_BUILD_JAVA_11" />
         <property name="prereleasingModule" value="false" />
         <property name="quality.level" value="development" />
-        <!-- Set the launcher property for Java 11 -->
-        <property name="launcher" value='--module-path="&lt;libdir&gt;/modules" @"&lt;libdir&gt;/gsea.args" --patch-module="jide.common=&lt;libdir&gt;/lib/jide-components-3.7.4.jar:&lt;libdir&gt;/lib/jide-dock-3.7.4.jar:&lt;libdir&gt;/lib/jide-grids-3.7.4.jar" --module=org.gsea_msigdb.gsea/${main-class}' />
+
+        <!-- Set the launcher & docker.image properties for Java 11 -->
+        <property name="launcher" value="--module-path=&lt;libdir&gt;/modules @&lt;libdir&gt;/gsea_gp.args --patch-module=jide.common=&lt;libdir&gt;/lib/jide-components-3.7.4.jar:&lt;libdir&gt;/lib/jide-dock-3.7.4.jar:&lt;libdir&gt;/lib/jide-grids-3.7.4.jar --module=org.gsea_msigdb.gsea/${main-class}" />
+        <property name="docker.image" value="genepattern/openjdk11:0.1" />
     	
     	<!-- Include the extra libs needed for a Java 11 build.  These are required for modularity dependencies. -->
     	<property environment="env" />
@@ -41,7 +43,7 @@
         <zipfileset id="lib_jars" dir="lib" includes="*.jar" prefix="modules" />
         <zipfileset id="lib_patch_jars" dir="${env.GSEA_REPO_HOME}/lib" includes="*.jar" prefix="lib" />
         <zipfileset id="module_jars" dir="${env.GSEA_REPO_HOME}/modules" includes="*.jar" prefix="modules" />
-        <zipfileset id="args_file" file="${env.GSEA_REPO_HOME}/scripts/java11/gsea.args" prefix="" />
+        <zipfileset id="args_file" file="${env.GSEA_REPO_HOME}/scripts/java11/gsea_gp.args" prefix="" />
     </target>
 
     <!-- Bump the build number and set the quality flag if we're doing a prerelease or release -->
@@ -57,7 +59,7 @@
 
     <target name="clean">
         <delete>
-            <fileset dir="build" includes="org/**,manifest" />
+            <fileset dir="build" includes="manifest,*DEV_BUILD*" />
         </delete>
     </target>
 
@@ -114,7 +116,7 @@
             <isset property="release.version" />
         </condition>
         <condition property="LSID" value="${LSID.noVersion}:${full.version}" else="${LSID.noVersion}:${test.version}">
-            <not><equals arg1="${full.version}" arg2="DEV_BUILD" /></not>
+            <not><contains string="${full.version}" substring="DEV_BUILD" /></not>
         </condition>
         <echo>${LSID.key} = ${LSID}</echo>
     </target>
@@ -122,6 +124,10 @@
 	<target name="addLauncherToManifest">
 		<!-- Ordinarily, we wuld just include this directly in the manifest.  Doing it this way allows us to do Java 11 builds. -->
 		<property name="launcher" value='-cp "&lt;libdir&gt;/lib/*" ${main-class}' />
+	    <property name="docker.image" value="genepattern/docker-java18:0.1" />
 		<replace file="${dest.dir}/manifest" token="@LAUNCHER@" value="${launcher}" />
+        <propertyfile file="${dest.dir}/manifest">
+            <entry key="job.docker.image" value="${docker.image}" />
+        </propertyfile>
 	</target>
 </project>

@@ -15,6 +15,11 @@
             <filterset><filter token="DATA_HOME" value="${env.GPUNIT_DATA_HOME}" /></filterset>
         </copy>
     </target>
+    <target name="initLocal_java11">
+        <copy file="gpunit.local_java11.properties" tofile="${temp.props.file}">
+            <filterset><filter token="DATA_HOME" value="${env.GPUNIT_DATA_HOME}" /></filterset>
+        </copy>
+    </target>
     <target name="initBetaAmi">
         <!-- Call with the GPBeta AMI test user PW as a command-line property -->
         <copy file="gpunit.gpbeta_ami.properties" tofile="${temp.props.file}">
@@ -32,6 +37,7 @@
     </target>
     
     <target name="run_tests.local" depends="initLocal,run_tests" />
+    <target name="run_tests.local_java11" depends="initLocal_java11,run_tests" />
     <target name="run_tests.gpbeta_ami" depends="initBetaAmi,run_tests" />
     
     <target name="clean">

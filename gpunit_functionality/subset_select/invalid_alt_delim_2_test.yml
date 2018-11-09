@@ -44,5 +44,6 @@ assertions:
         jobStatus: failure
         files:
             "stderr.txt":
-                diffCmd: ../diffFirstLineOnly.sh
+                diffCmd: ../grepMessage.sh java.lang.IllegalArgumentException..Gene.Set.selection.specifier..8q11..is.not.valid
+                # The following file is unused; keeping it just for reference.
                 diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/subset_select/invalid_alt_delim_2_test/stderr.txt"

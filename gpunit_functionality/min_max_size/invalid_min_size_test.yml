@@ -40,5 +40,6 @@ assertions:
         jobStatus: fail
         files:
             "stderr.txt":
-                diffCmd: ../diffFirstLineOnly.sh
+                diffCmd: ../grepMessage.sh xtools.api.param.BadParamException..After.pruning..none.of.the.gene.sets.passed.size.thresholds
+                # The following file is unused; keeping it just for reference.
                 diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/min_max_size/invalid_min_size_test/stderr.txt"

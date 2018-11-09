@@ -40,5 +40,6 @@ assertions:
         jobStatus: fail
         files:
             "stderr.txt":
-                diffCmd: ../diffFirstLineOnly.sh
+                diffCmd: ../grepMessage.sh java.lang.IllegalArgumentException..Max.size.cannot.be.less.than.min.size
+                # The following file is unused; keeping it just for reference.
                 diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/min_max_size/invalid_min_size_gt_max_test/stderr.txt"

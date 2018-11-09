@@ -1,4 +1,4 @@
-# Copyright (c) 2003-2017 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 #!/bin/sh
 execDir=`dirname $0`
 
@@ -32,8 +32,9 @@ for binFile in $binFileList; do
    baseBinFile=`basename $binFile`
    if [ -s $diffDir2/$baseBinFile ]; then
       diff --strip-trailing-cr -q $binFile $diffDir2/$baseBinFile
-   else
       status=$(( $? + status ))
+   else
+      status=$(( 1 + status ))
    fi
 done
 
@@ -44,8 +45,9 @@ for svgFile in $svgFileList; do
    baseSvgFile=`basename $svgFile`
    if [ -s $diffDir2/$baseSvgFile ]; then
       zdiff --strip-trailing-cr -q $svgFile $diffDir2/$baseSvgFile
-   else
       status=$(( $? + status ))
+   else
+      status=$(( 1 + status ))
    fi
 done
 
@@ -53,8 +55,6 @@ done
 htmlFileList=`ls -1 $diffDir1/*.html | grep -v 'gsea_report_.*.html' | grep -v 'index.html'`
 for htmlFile in $htmlFileList; do
    baseHtmlFile=`basename $htmlFile`
-   # Handle GSEA website URL change.  This will eventually be covered by new result files with corrected URLs.
-   sed -ibak s/www.broadinstitute.org/www.gsea-msigdb.org/ $diffDir1/$baseHtmlFile
    # Clean up possible PNG file naming differences.  This is useful for comparing against GUI runs but makes no difference with CLI/GpUnit runs.
    sed 's/_[0-9]*.png/.png/g' < $htmlFile > $diffDir1/cln_${baseHtmlFile}
    sed 's/_[0-9]*.png/.png/g' < $diffDir2/$baseHtmlFile > $diffDir2/cln_${baseHtmlFile}
