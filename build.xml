@@ -39,10 +39,17 @@
     	<property environment="env" />
     	<condition property="check_GSEA_REPO_HOME"> <isset property="env.GSEA_REPO_HOME" /> </condition>
     	<fail unless="${check_GSEA_REPO_HOME}" message="Please set the GSEA_REPO_HOME environment variable to your local GSEA Git repository location." />
+
+    	<!-- Make sure a Java 11 build exists in the repo -->
+    	<condition property="check_GSEA_build_exists">
+    		<resourceexists> <file file="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist" /> </resourceexists> 
+    	</condition>
+        <fail unless="${check_GSEA_build_exists}" message="Please perform a Java 11 build in GSEA_REPO_HOME." />
     	
-        <zipfileset id="lib_jars" dir="lib" includes="*.jar" prefix="modules" />
-        <zipfileset id="lib_patch_jars" dir="${env.GSEA_REPO_HOME}/lib" includes="*.jar" prefix="lib" />
-        <zipfileset id="module_jars" dir="${env.GSEA_REPO_HOME}/modules" includes="*.jar" prefix="modules" />
+    	<!-- Only pick up disable-prefs.jar from the module repo.  All other jars come from the Desktop build -->
+        <zipfileset id="lib_jars" dir="lib" includes="disable-prefs.jar" prefix="modules" />
+        <zipfileset id="lib_patch_jars" dir="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist/lib" includes="*.jar" prefix="lib" />
+        <zipfileset id="module_jars" dir="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist/modules" includes="*.jar" prefix="modules" />
         <zipfileset id="args_file" file="${env.GSEA_REPO_HOME}/scripts/java11/gsea_gp.args" prefix="" />
     </target>
 
