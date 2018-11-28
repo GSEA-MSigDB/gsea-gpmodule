@@ -32,7 +32,7 @@
         <property name="quality.level" value="development" />
 
         <!-- Set the launcher & docker.image properties for Java 11 -->
-        <property name="launcher" value="--module-path=&lt;libdir&gt;/modules @&lt;libdir&gt;/gsea_gp.args --patch-module=jide.common=&lt;libdir&gt;/lib/jide-components-3.7.4.jar:&lt;libdir&gt;/lib/jide-dock-3.7.4.jar:&lt;libdir&gt;/lib/jide-grids-3.7.4.jar --module=org.gsea_msigdb.gsea/${main-class}" />
+        <property name="launcher" value="--module-path=&lt;libdir&gt;/modules @&lt;libdir&gt;/gsea.args --patch-module=jide.common=&lt;libdir&gt;/lib/jide-components-3.7.4.jar:&lt;libdir&gt;/lib/jide-dock-3.7.4.jar:&lt;libdir&gt;/lib/jide-grids-3.7.4.jar --module=org.gsea_msigdb.gsea/${main-class}" />
         <property name="docker.image" value="genepattern/openjdk11:0.1" />
     	
     	<!-- Include the extra libs needed for a Java 11 build.  These are required for modularity dependencies. -->
@@ -50,7 +50,7 @@
         <zipfileset id="lib_jars" dir="lib" includes="disable-prefs.jar" prefix="modules" />
         <zipfileset id="lib_patch_jars" dir="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist/lib" includes="*.jar" prefix="lib" />
         <zipfileset id="module_jars" dir="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist/modules" includes="*.jar" prefix="modules" />
-        <zipfileset id="args_file" file="${env.GSEA_REPO_HOME}/scripts/java11/gsea_gp.args" prefix="" />
+        <zipfileset id="args_file" file="${env.GSEA_REPO_HOME}/scripts/java11/gsea.args" prefix="" />
     </target>
 
     <!-- Bump the build number and set the quality flag if we're doing a prerelease or release -->
