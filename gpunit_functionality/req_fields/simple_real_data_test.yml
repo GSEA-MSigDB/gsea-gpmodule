@@ -5,7 +5,7 @@ name: GSEA simple_real_data_test
 description: A simple test of GSEA using real data from the tutorial (P53) and normal param settings.  Note that this uses a drop-down gene set selection.
 params:
        expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53_collapsed_symbols.gct"
-       gene.sets.database: [ "ftp://gpftp.broadinstitute.org/module_support_files/msigdb/gmt/c1.all.v6.0.symbols.gmt" ]
+       gene.sets.database: [ "https://data.broadinstitute.org/gsea-msigdb/msigdb/release/6.0/c1.all.v6.0.symbols.gmt" ]
        number.of.permutations: "1000"
        phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53.cls"
        target.profile: ""

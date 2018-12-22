@@ -5,7 +5,7 @@ name: GSEA multi_msigdb_gmt_test
 description: Test GSEA using the Diabetes dataset with multiple MSigDB GMTs.  Variation of user_gene_set_test.
 params:
        expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v19/input/Diabetes_collapsed_symbols.gct"
-       gene.sets.database: [ "ftp://gpftp.broadinstitute.org/module_support_files/msigdb/gmt/c1.all.v6.0.symbols.gmt", "ftp://gpftp.broadinstitute.org/module_support_files/msigdb/gmt/c2.cp.kegg.v6.0.symbols.gmt" ]
+       gene.sets.database: [ "https://data.broadinstitute.org/gsea-msigdb/msigdb/release/6.0/c1.all.v6.0.symbols.gmt", "https://data.broadinstitute.org/gsea-msigdb/msigdb/release/6.0/c2.cp.kegg.v6.0.symbols.gmt" ]
        number.of.permutations: "10"
        phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v19/input/Diabetes.cls"
        target.profile: ""
