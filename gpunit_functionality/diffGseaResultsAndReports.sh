@@ -16,11 +16,11 @@ unzip -q $zip1 -d $diffDir1
 unzip -q $zip2 -d $diffDir2
 
 # Diff only selected files out of the ZIP
-diff --strip-trailing-cr -q $diffDir1/edb/$bare1.rnk $diffDir2/edb/$bare2.rnk
+diff -i --strip-trailing-cr -q $diffDir1/edb/$bare1.rnk $diffDir2/edb/$bare2.rnk
 status=$?
-diff --strip-trailing-cr -q $diffDir1/edb/results.edb $diffDir2/edb/results.edb
+diff -i --strip-trailing-cr -q $diffDir1/edb/results.edb $diffDir2/edb/results.edb
 status=$(( $? + status ))
-diff --strip-trailing-cr -q $diffDir1/edb/gene_sets.gmt $diffDir2/edb/gene_sets.gmt
+diff -i --strip-trailing-cr -q $diffDir1/edb/gene_sets.gmt $diffDir2/edb/gene_sets.gmt
 status=$(( $? + status ))
 
 # Checking existence of report files.  We're working out of diffDir1 as that is from the 'expected' result
@@ -31,7 +31,7 @@ binFileList=`ls -1 $diffDir1/*.xls| grep -v 'gsea_report_.*.xls'| grep -v 'ranke
 for binFile in $binFileList; do
    baseBinFile=`basename $binFile`
    if [ -s $diffDir2/$baseBinFile ]; then
-      diff --strip-trailing-cr -q $binFile $diffDir2/$baseBinFile
+      diff -i --strip-trailing-cr -q $binFile $diffDir2/$baseBinFile
       status=$(( $? + status ))
    else
       status=$(( 1 + status ))
@@ -44,7 +44,7 @@ svgFileList=`ls -1 $diffDir1/*.svg.gz`
 for svgFile in $svgFileList; do
    baseSvgFile=`basename $svgFile`
    if [ -s $diffDir2/$baseSvgFile ]; then
-      zdiff --strip-trailing-cr -q $svgFile $diffDir2/$baseSvgFile
+      zdiff -i --strip-trailing-cr -q $svgFile $diffDir2/$baseSvgFile
       status=$(( $? + status ))
    else
       status=$(( 1 + status ))
@@ -55,10 +55,11 @@ done
 htmlFileList=`ls -1 $diffDir1/*.html | grep -v 'gsea_report_.*.html' | grep -v 'index.html'`
 for htmlFile in $htmlFileList; do
    baseHtmlFile=`basename $htmlFile`
+   #diff -b -i --strip-trailing-cr -q $diffDir1/${baseHtmlFile} $diffDir2/${baseHtmlFile}
    # Clean up possible PNG file naming differences.  This is useful for comparing against GUI runs but makes no difference with CLI/GpUnit runs.
    sed 's/_[0-9]*.png/.png/g' < $htmlFile > $diffDir1/cln_${baseHtmlFile}
    sed 's/_[0-9]*.png/.png/g' < $diffDir2/$baseHtmlFile > $diffDir2/cln_${baseHtmlFile}
-   diff -b --strip-trailing-cr -q $diffDir1/cln_${baseHtmlFile} $diffDir2/cln_${baseHtmlFile}
+   diff -b -i --strip-trailing-cr -q $diffDir1/cln_${baseHtmlFile} $diffDir2/cln_${baseHtmlFile}
    status=$(( $? + status ))
 done
 

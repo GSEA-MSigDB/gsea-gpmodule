@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+  Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 -->
-
-<project basedir="" default="devReleaseModule" name="GSEA">
-    <property name="main-class" value="org.genepattern.modules.GseaWrapper" />
-
+<project basedir="" default="devLocalModule" name="GSEA">
     <target name="init">
         <tstamp />
+        <property environment="env" />
+        <property name="desktop.prod.version" value="4.0.0" />
         <property name="test.version" value="999999999"/>
         <property name="dest.dir" value="build" />
         <mkdir dir="build" />
-    	
-    	<!-- Libs to include in the ZIP.  Note that module_jars, lib_patch_jars, and args_file select nothing; these are used by the Java 11 build only. -->
-        <zipfileset id="lib_jars" dir="lib" includes="*.jar" prefix="lib" />
-        <zipfileset id="module_jars" dir="." excludes="**/*" prefix="" />
-        <zipfileset id="lib_patch_jars" dir="." excludes="**/*" prefix="" />
-        <zipfileset id="args_file" dir="." excludes="**/*" prefix="" />
+        <property name="dataBroadBaseUrl" value="https://data.broadinstitute.org/gsea-msigdb/gsea/software" />
+        <property name="githubBaseUrl" value="https://github.com/GSEA-MSigDB/gsea-desktop/releases/tag" />
     </target>
-
-    <target name="init_devrelease" depends="init">
-    	<!-- Set the full.version property so that it doesn't come in from release.properties -->
-        <property name="full.version" value="DEV_BUILD" />    	
+    
+    <target name="init_devrelease" depends="init" description="internal target used by other init_devrelease_* targets; do not use directly">
+        <!-- Set the full.version property so that it doesn't come in from release.properties -->
+        <property name="full.version" value="DEV_BUILD" />
         <property name="prereleasingModule" value="false" />
         <property name="quality.level" value="development" />
     </target>
+    
+    <target name="init_devrelease_snapshotDesktop" depends="init_devrelease" 
+        description="Init properties for a Dev module build with the GSEA Desktop Snapshot bundle">
+        <!-- Override the default URL and release tag to point to the Snapshot -->
+        <property name="desktop.release.tag" value="snapshot" />
+        <property name="bundleBaseUrl" value="${dataBroadBaseUrl}" />
+    </target>
+    
+    <target name="init_devrelease_prodDesktop" depends="init_devrelease"
+        description="Init properties for a Dev module build with the GSEA Desktop Production bundle">
+    </target>
 
-    <target name="init_java11_devrelease" depends="init">
-        <property name="full.version" value="DEV_BUILD_JAVA_11" />
-        <property name="prereleasingModule" value="false" />
-        <property name="quality.level" value="development" />
+    <target name="init_devrelease_local" depends="init_devrelease"
+        description="Init properties for a Dev module build with a local build of the GSEA Desktop">
+        <!-- Include the extra libs needed for a Java 11 build.  These are required for modularity dependencies. -->
+        <condition property="check_GSEA_REPO_HOME"> <isset property="env.GSEA_REPO_HOME" /> </condition>
+        <fail unless="${check_GSEA_REPO_HOME}" message="Please set the GSEA_REPO_HOME environment variable to your local GSEA Git repository location." />
 
-        <!-- Set the launcher & docker.image properties for Java 11 -->
-        <property name="launcher" value="--module-path=&lt;libdir&gt;/modules @&lt;libdir&gt;/gsea.args --patch-module=jide.common=&lt;libdir&gt;/lib/jide-components-3.7.4.jar:&lt;libdir&gt;/lib/jide-dock-3.7.4.jar:&lt;libdir&gt;/lib/jide-grids-3.7.4.jar --module=org.gsea_msigdb.gsea/${main-class}" />
-        <property name="docker.image" value="genepattern/openjdk11:0.1" />
-    	
-    	<!-- Include the extra libs needed for a Java 11 build.  These are required for modularity dependencies. -->
-    	<property environment="env" />
-    	<condition property="check_GSEA_REPO_HOME"> <isset property="env.GSEA_REPO_HOME" /> </condition>
-    	<fail unless="${check_GSEA_REPO_HOME}" message="Please set the GSEA_REPO_HOME environment variable to your local GSEA Git repository location." />
-
-    	<!-- Make sure a Java 11 build exists in the repo -->
-    	<condition property="check_GSEA_build_exists">
-    		<resourceexists> <file file="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist" /> </resourceexists> 
-    	</condition>
+        <!-- Make sure a Java 11 build exists in the repo -->
+        <condition property="check_GSEA_build_exists">
+            <resourceexists> <file file="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist" /> </resourceexists> 
+        </condition>
         <fail unless="${check_GSEA_build_exists}" message="Please perform a Java 11 build in GSEA_REPO_HOME." />
-    	
-    	<!-- Only pick up disable-prefs.jar from the module repo.  All other jars come from the Desktop build -->
+        
+        <!-- Only pick up disable-prefs.jar from the module repo.  All other jars come from the Desktop build -->
         <zipfileset id="lib_jars" dir="lib" includes="disable-prefs.jar" prefix="modules" />
         <zipfileset id="lib_patch_jars" dir="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist/lib" includes="*.jar" prefix="lib" />
         <zipfileset id="module_jars" dir="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist/modules" includes="*.jar" prefix="modules" />
-        <zipfileset id="args_file" file="${env.GSEA_REPO_HOME}/scripts/java11/gsea.args" prefix="" />
+        <zipfileset id="cli_scripts" dir="${env.GSEA_REPO_HOME}/scripts/java11" includes="gsea.args,gsea-cli.sh" prefix="" filemode="755" />
     </target>
 
     <!-- Bump the build number and set the quality flag if we're doing a prerelease or release -->
-    <target name="init_prerelease" depends="init">
+    <target name="init_prerelease" depends="init" 
+        description="Init properties for a Prerelease module build with the GSEA Desktop Production bundle">
         <property name="prereleasingModule" value="true" />
         <property name="quality.level" value="preproduction" />
     </target>
 
-    <target name="init_release" depends="init">
+    <target name="init_release" depends="init"
+        description="Init properties for a Release module build with the GSEA Desktop Production bundle">
         <property name="prereleasingModule" value="false" />
         <property name="quality.level" value="production" />
     </target>
@@ -68,6 +68,20 @@
         <delete>
             <fileset dir="build" includes="manifest,*DEV_BUILD*" />
         </delete>
+    </target>
+
+    <target name="getDesktopBundle" depends="init">
+        <property name="bundleBaseUrl" value="${githubBaseUrl}" />
+        <property name="desktop.release.tag" value="v${desktop.prod.version}" />
+        <property name="bundleUrl" value="${bundleBaseUrl}/${desktop.release.tag}/GSEA_${desktop.release.tag}.zip" />
+        <get src="${bundleUrl}" dest="${dest.dir}" skipexisting="true" />
+        <unzip src="${dest.dir}/GSEA_${desktop.release.tag}.zip" dest="${dest.dir}/desktop" overwrite="false" />
+        
+        <!-- Only pick up disable-prefs.jar from the module repo.  All other jars come from the Desktop build -->
+        <zipfileset id="lib_jars" dir="lib" includes="disable-prefs.jar" prefix="modules" />
+        <zipfileset id="lib_patch_jars" dir="${dest.dir}/desktop/GSEA_${desktop.release.tag}/lib" includes="*.jar" prefix="lib" />
+        <zipfileset id="module_jars" dir="${dest.dir}/desktop/GSEA_${desktop.release.tag}/modules" includes="*.jar" prefix="modules" />
+        <zipfileset id="cli_scripts" dir="${dest.dir}/desktop/GSEA_${desktop.release.tag}/" includes="gsea.args,gsea-cli.sh" prefix="" filemode="755" />
     </target>
 
     <target name="update-release-props" depends="init">
@@ -82,24 +96,26 @@
       <property file="release.properties" />
     </target>
 
-    <target name="create-zip" depends="init,clean,addLSIDtoManifest,addLauncherToManifest">
+    <target name="create-zip" depends="init,clean,addLSIDtoManifest">
         <zip destfile="${dest.dir}/${ant.project.name}_v${full.version}.zip" whenempty="fail" defaultexcludes="true" duplicate="preserve">
             <fileset dir="." includes="*.html, *.json, LICENSE*.txt, release.properties" />
-        	<fileset dir="${dest.dir}" includes="manifest" />
-        	<zipfileset refid="lib_jars" />
+            <fileset dir="${dest.dir}" includes="manifest" />
+            <zipfileset refid="lib_jars" />
             <zipfileset refid="module_jars" />
             <zipfileset refid="lib_patch_jars" />
-            <zipfileset refid="args_file" />
+            <zipfileset refid="cli_scripts" />
         </zip>
     </target>
 
-    <target name="devReleaseModule" depends="init_devrelease,load-release-props,create-zip" />
+    <target name="devLocalModule" depends="init_devrelease_local,load-release-props,create-zip" />
 
-    <target name="devJava11ReleaseModule" depends="init_java11_devrelease,load-release-props,create-zip" />
+    <target name="devSnapshotModule" depends="init_devrelease_snapshotDesktop,getDesktopBundle,load-release-props,create-zip" />
 
-    <target name="prereleaseModule" depends="init_prerelease,update-release-props,load-release-props,create-zip" />
+    <target name="devReleaseModule" depends="init_devrelease_prodDesktop,getDesktopBundle,load-release-props,create-zip" />
+
+    <target name="prereleaseModule" depends="init_prerelease,getDesktopBundle,update-release-props,load-release-props,create-zip" />
     
-    <target name="releaseModule" depends="init_release,update-release-props,load-release-props,create-zip" />
+    <target name="releaseModule" depends="init_release,getDesktopBundle,update-release-props,load-release-props,create-zip" />
     
     <target name="addLSIDtoManifest" depends="init,getLSID">
         <tstamp>
@@ -127,14 +143,4 @@
         </condition>
         <echo>${LSID.key} = ${LSID}</echo>
     </target>
-
-	<target name="addLauncherToManifest">
-		<!-- Ordinarily, we wuld just include this directly in the manifest.  Doing it this way allows us to do Java 11 builds. -->
-		<property name="launcher" value='-cp "&lt;libdir&gt;/lib/*" ${main-class}' />
-	    <property name="docker.image" value="genepattern/docker-java18:0.1" />
-		<replace file="${dest.dir}/manifest" token="@LAUNCHER@" value="${launcher}" />
-        <propertyfile file="${dest.dir}/manifest">
-            <entry key="job.docker.image" value="${docker.image}" />
-        </propertyfile>
-	</target>
 </project>

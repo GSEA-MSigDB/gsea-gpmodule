@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+  Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 -->
 <project basedir="." default="run_tests.local" name="gpunit_runner">
     <!-- Set the environment variables GPUNIT_HOME and GPUNIT_DATA_HOME with paths to 
@@ -12,11 +12,6 @@
     
     <target name="initLocal">
         <copy file="gpunit.local.properties" tofile="${temp.props.file}">
-            <filterset><filter token="DATA_HOME" value="${env.GPUNIT_DATA_HOME}" /></filterset>
-        </copy>
-    </target>
-    <target name="initLocal_java11">
-        <copy file="gpunit.local_java11.properties" tofile="${temp.props.file}">
             <filterset><filter token="DATA_HOME" value="${env.GPUNIT_DATA_HOME}" /></filterset>
         </copy>
     </target>
@@ -37,7 +32,6 @@
     </target>
     
     <target name="run_tests.local" depends="initLocal,run_tests" />
-    <target name="run_tests.local_java11" depends="initLocal_java11,run_tests" />
     <target name="run_tests.gpbeta_ami" depends="initBetaAmi,run_tests" />
     
     <target name="clean">

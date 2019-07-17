@@ -16,11 +16,11 @@ unzip -q $zip1 -d $diffDir1
 unzip -q $zip2 -d $diffDir2
 
 # Diff only selected files out of the ZIP
-diff --strip-trailing-cr -q $diffDir1/edb/$bare1.rnk $diffDir2/edb/$bare2.rnk
+diff -i --strip-trailing-cr -q $diffDir1/edb/$bare1.rnk $diffDir2/edb/$bare2.rnk
 status=$?
-diff --strip-trailing-cr -q $diffDir1/edb/results.edb $diffDir2/edb/results.edb
+diff -i --strip-trailing-cr -q $diffDir1/edb/results.edb $diffDir2/edb/results.edb
 status=$(( $? + status ))
-diff --strip-trailing-cr -q $diffDir1/edb/gene_sets.gmt $diffDir2/edb/gene_sets.gmt
+diff -i --strip-trailing-cr -q $diffDir1/edb/gene_sets.gmt $diffDir2/edb/gene_sets.gmt
 status=$(( $? + status ))
 
 rm -rf $diffDir1 $diffDir2

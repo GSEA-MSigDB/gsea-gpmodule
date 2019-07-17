@@ -3,8 +3,6 @@ Third-Party Components Acknowledgments for the GSEA module
 
 The GSEA module for GenePattern is distributed, in part, under and subject to the provisions of licenses for:
 
-Apache Batik, Copyright 1998-2014 The Apache Software Foundation. All rights reserved. (https://xmlgraphics.apache.org/batik/).
-Apache Log4j, Copyright 1999-2017 The Apache Software Foundation. All rights reserved. (http://logging.apache.org/log4j/2.x/).
 Disable Preferences, Copyright 2003-2011 Robert Slifka. (http://allaboutbalance.com/articles/disableprefs/).
 
-This module also relies on the GSEA Desktop JAR.  For acknowledgments related to that, see the GitHub repository at https://github.com/GSEA-MSigDB/gsea-desktop.
+This module also relies on the GSEA Desktop code base.  For acknowledgments related to that, see the GitHub repository at https://github.com/GSEA-MSigDB/gsea-desktop.
