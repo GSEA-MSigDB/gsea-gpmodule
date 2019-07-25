@@ -1,13 +1,13 @@
-# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
-#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:19
+# Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
 name: GSEA valid_user_gmx_subset_test
 description: Test GSEA using the Diabetes dataset with subset-select out of a user-provided GMX, using only gene set name.  Variation of user_gene_set_test.
 params:
-       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v19/input/Diabetes_collapsed_symbols.gct"
-       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v19/input/c1.symbols.reduced.gmx" ]
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes_collapsed_symbols.gct"
+       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmx" ]
        number.of.permutations: "10"
-       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v19/input/Diabetes.cls"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes.cls"
        target.profile: ""
        permutation.type: "phenotype"
        collapse.dataset: "false"
@@ -41,4 +41,4 @@ assertions:
         files:
             "Diabetes_collapsed_symbols.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/subset_select/valid_user_gmx_subset_test/Diabetes_collapsed_symbols.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/subset_select/valid_user_gmx_subset_test/Diabetes_collapsed_symbols.zip"

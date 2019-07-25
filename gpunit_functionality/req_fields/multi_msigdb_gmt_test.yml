@@ -1,13 +1,13 @@
-# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
-#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:19
+# Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
 name: GSEA multi_msigdb_gmt_test
 description: Test GSEA using the Diabetes dataset with multiple MSigDB GMTs.  Variation of user_gene_set_test.
 params:
-       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v19/input/Diabetes_collapsed_symbols.gct"
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes_collapsed_symbols.gct"
        gene.sets.database: [ "https://data.broadinstitute.org/gsea-msigdb/msigdb/release/6.0/c1.all.v6.0.symbols.gmt", "https://data.broadinstitute.org/gsea-msigdb/msigdb/release/6.0/c2.cp.kegg.v6.0.symbols.gmt" ]
        number.of.permutations: "10"
-       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v19/input/Diabetes.cls"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes.cls"
        target.profile: ""
        permutation.type: "phenotype"
        collapse.dataset: "false"
@@ -41,4 +41,4 @@ assertions:
         files:
             "Diabetes_collapsed_symbols.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/req_fields/multi_msigdb_gmt_test/Diabetes_collapsed_symbols.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/req_fields/multi_msigdb_gmt_test/Diabetes_collapsed_symbols.zip"

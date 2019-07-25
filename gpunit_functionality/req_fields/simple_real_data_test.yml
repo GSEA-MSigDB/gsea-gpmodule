@@ -1,13 +1,13 @@
-# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
-#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:19
+# Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
 name: GSEA simple_real_data_test
 description: A simple test of GSEA using real data from the tutorial (P53) and normal param settings.  Note that this uses a drop-down gene set selection.
 params:
-       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53_collapsed_symbols.gct"
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_collapsed_symbols.gct"
        gene.sets.database: [ "https://data.broadinstitute.org/gsea-msigdb/msigdb/release/6.0/c1.all.v6.0.symbols.gmt" ]
        number.of.permutations: "1000"
-       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53.cls"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53.cls"
        target.profile: ""
        permutation.type: "phenotype"
        collapse.dataset: "false"
@@ -41,4 +41,4 @@ assertions:
         files:
             "P53_collapsed_symbols.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/req_fields/simple_real_data_test/P53_collapsed_symbols.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/req_fields/simple_real_data_test/P53_collapsed_symbols.zip"

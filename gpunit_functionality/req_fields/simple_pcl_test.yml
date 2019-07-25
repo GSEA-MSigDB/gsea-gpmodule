@@ -1,17 +1,17 @@
-# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
-#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:19
+# Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
 name: GSEA simple_pcl_test
 description: Test GSEA with a PCL file (to be collapsed) and our reduced C1 test Gene Set.  The  data is taken directly from our P53 dataset, with blank fields in place of some values to test missing value handling.
 params:
-       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53_hgu95av2_wMissing.pcl"
-       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v19/input/c1.symbols.reduced.gmt" ]
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_hgu95av2_wMissing.pcl"
+       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
        number.of.permutations: "10"
-       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53.cls"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53.cls"
        target.profile: ""
        permutation.type: "phenotype"
        collapse.dataset: "true"
-       chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v19/input/HG_U95Av2.chip"
+       chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v20/input/HG_U95Av2.chip"
        # Modifying the ZIP name here so that the diffCmd can find the RNK inside.  We could modify the diffCmd 
        # to be able to find it, but that makes the code somewhat complicated. 
        output.file.name: "P53_hgu95av2_wMissing.pcl_collapsed_to_symbols.zip"
@@ -43,4 +43,4 @@ assertions:
         files:
             "P53_hgu95av2_wMissing.pcl_collapsed_to_symbols.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/req_fields/simple_pcl_test/P53_hgu95av2_wMissing.pcl_collapsed_to_symbols.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/req_fields/simple_pcl_test/P53_hgu95av2_wMissing.pcl_collapsed_to_symbols.zip"

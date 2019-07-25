@@ -1,13 +1,13 @@
-# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
-#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:19
+# Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
 name: GSEA simple_txt_DS_test
 description: Test GSEA using a TXT format datset.  This is just a trivial edit on our P53 datset.
 params:
-       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53_collapsed_symbols.txt"
-       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v19/input/c1.symbols.reduced.gmt" ]
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_collapsed_symbols.txt"
+       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
        number.of.permutations: "10"
-       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v19/input/P53.cls"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53.cls"
        target.profile: ""
        permutation.type: "phenotype"
        collapse.dataset: "false"
@@ -41,4 +41,4 @@ assertions:
         files:
             "P53_collapsed_symbols.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v19/output/req_fields/simple_txt_DS_test/P53_collapsed_symbols.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/req_fields/simple_txt_DS_test/P53_collapsed_symbols.zip"

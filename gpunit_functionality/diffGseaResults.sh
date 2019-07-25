@@ -18,8 +18,7 @@ unzip -q $zip2 -d $diffDir2
 # Diff only selected files out of the ZIP
 diff -i --strip-trailing-cr -q $diffDir1/edb/$bare1.rnk $diffDir2/edb/$bare2.rnk
 status=$?
-sed 's/CHIP=.* RND_ES/CHIP="GENE_SYMBOL" RND_ES/' <$diffDir2/edb/results.edb >$diffDir2/edb/results.edb_tmp
-diff -i --strip-trailing-cr -q $diffDir1/edb/results.edb $diffDir2/edb/results.edb_tmp
+diff -i --strip-trailing-cr -q $diffDir1/edb/results.edb $diffDir2/edb/results.edb
 status=$(( $? + status ))
 diff -i --strip-trailing-cr -q $diffDir1/edb/gene_sets.gmt $diffDir2/edb/gene_sets.gmt
 status=$(( $? + status ))
