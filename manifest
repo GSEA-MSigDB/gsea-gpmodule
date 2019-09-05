@@ -146,7 +146,7 @@ p10_optional=
 p10_prefix=
 p10_prefix_when_specified=
 p10_type=java.lang.String
-p10_value=Signal2Noise;tTest;Ratio_of_Means\=Ratio_of_Classes;Diff_of_Means\=Diff_of_Classes;log2_ratio_of_means\=log2_Ratio_of_Classes;Pearson;Cosine;Manhatten\=Manhattan;Euclidean
+p10_value=Signal2Noise;tTest;Ratio_of_Classes;Diff_of_Classes;log2_Ratio_of_Classes;Pearson;Cosine;Manhatten\=Manhattan;Euclidean
 
 p11_MODE=
 p11_TYPE=TEXT
