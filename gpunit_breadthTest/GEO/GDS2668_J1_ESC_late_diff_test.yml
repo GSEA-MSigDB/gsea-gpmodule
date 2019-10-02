@@ -10,7 +10,7 @@ params:
        phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/GDS2668_J1_ESC_late_diff.cls"
        target.profile: ""
        permutation.type: "gene_set"
-       collapse.dataset: "false"
+       collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        output.file.name: "<expression.dataset_basename>.zip"
        scoring.scheme: "weighted"

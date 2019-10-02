@@ -10,7 +10,7 @@ params:
        phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/MD.outcome.2.cls"
        target.profile: "0_versus_NA"
        permutation.type: "phenotype"
-       collapse.dataset: "false"
+       collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        # Renaming result file for ease of testing.
        output.file.name: "MD.MD.outcome.2.cls_0_versus_NA.zip"

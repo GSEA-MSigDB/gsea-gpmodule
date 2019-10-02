@@ -10,7 +10,7 @@ params:
        phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/GSE1462.cls"
        target.profile: "MELAS_versus_PEO"
        permutation.type: "gene_set"
-       collapse.dataset: "false"
+       collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        # Renaming result file for ease of testing.
        output.file.name: "GSE1462.GSE1462.cls_MELAS_versus_PEO.zip"

@@ -10,7 +10,7 @@ params:
        phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/dmap_core_probes_s206.2.cls"
        target.profile: "HSC1_versus_MEP"
        permutation.type: "phenotype"
-       collapse.dataset: "false"
+       collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        # Renaming result file for ease of testing.
        output.file.name: "dmap_core_probes_s206.dmap_core_probes_s206.2.cls_HSC1_versus_MEP.zip"

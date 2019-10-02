@@ -2,19 +2,19 @@
 #module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
 name: GSEA collapse_real_data_test
-description: Test the GSEA 'collapse dataset' function.  Variation of user_gene_set_test.
+description: Test the GSEA 'collapse dataset' function.
 params:
-       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_hgu95av2.gct"
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes_hgu133a.gct"
        gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
        number.of.permutations: "10"
-       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53.cls"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes.cls"
        target.profile: ""
        permutation.type: "phenotype"
-       collapse.dataset: "true"
-       chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v20/input/HG_U95Av2.chip"
+       collapse.dataset: "Collapse"
+       chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v20/input/HG_U133A.chip"
        # Modifying the ZIP name here so that the diffCmd can find the RNK inside.  We could modify the diffCmd 
        # to be able to find it, but that makes the code somewhat complicated. 
-       output.file.name: "P53_hgu95av2_collapsed_to_symbols.zip"
+       output.file.name: "Diabetes_hgu133a_collapsed_to_symbols.zip"
        scoring.scheme: "weighted"
        metric.for.ranking.genes: "Signal2Noise"
        gene.list.sorting.mode: "real"
@@ -41,9 +41,6 @@ params:
 assertions:
         jobStatus: success
         files:
-            "P53_hgu95av2_collapsed_to_symbols.zip":
-                # Note that we can't simply use the basic/simple_real_data_test result file as these will *not* be identical due
-                # to some embedding of names.  I could make a more clever diffCmd to account for this, but it's simpler to just
-                # save a different result file.  However, I have manually verified that the contents are identical.
+            "Diabetes_hgu133a_collapsed_to_symbols.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/collapse/collapse_real_data_test/P53_hgu95av2_collapsed_to_symbols.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/collapse/collapse_real_data_test/Diabetes_hgu133a_collapsed_to_symbols.zip"

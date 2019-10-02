@@ -10,7 +10,7 @@ params:
        phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53.cls"
        target.profile: ""
        permutation.type: "phenotype"
-       collapse.dataset: "true"
+       collapse.dataset: "Collapse"
        chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v20/input/HG_U95Av2.chip"
        # Modifying the ZIP name here so that the diffCmd can find the RNK inside.  We could modify the diffCmd 
        # to be able to find it, but that makes the code somewhat complicated. 

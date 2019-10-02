@@ -6,7 +6,7 @@
     <target name="init">
         <tstamp />
         <property environment="env" />
-        <property name="desktop.prod.version" value="4.0.0" />
+        <property name="desktop.prod.version" value="4.0.2" />
         <property name="test.version" value="999999999"/>
         <property name="dest.dir" value="build" />
         <mkdir dir="build" />

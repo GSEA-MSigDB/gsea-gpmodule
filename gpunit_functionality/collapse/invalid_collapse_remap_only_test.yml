@@ -1,17 +1,17 @@
 # Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 #module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
-name: GSEA invalid_subset_not_in_gmt_test
-description: Invalid test, selected.gene.sets not in GMT
+name: GSEA Invalid_collapse_remap_only_test
+description: Test the GSEA 'collapse dataset' function, causing an error on remapping only (no collapse) due to duplicates.  Variation of user_gene_set_test.
 params:
-       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes_collapsed_symbols.gct"
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_hgu95av2.gct"
        gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
        number.of.permutations: "10"
-       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes.cls"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53.cls"
        target.profile: ""
        permutation.type: "phenotype"
-       collapse.dataset: "No_Collapse"
-       #chip.platform.file: 
+       collapse.dataset: "Remap_Only"
+       chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v20/input/HG_U95Av2.chip"
        output.file.name: "<expression.dataset_basename>.zip"
        scoring.scheme: "weighted"
        metric.for.ranking.genes: "Signal2Noise"
@@ -32,15 +32,14 @@ params:
        save.random.ranked.lists: "false"
        plot.graphs.for.the.top.sets.of.each.phenotype: "20"
        make.detailed.gene.set.report: "false"
-       # Two of these aren't present; the others are in the GMT.
-       selected.gene.sets: "c1.symbols.reduced.gmt#NOT_PRESENT,c1.symbols.reduced.gmt#MISSING,c1.symbols.reduced.gmt#CHR13Q14,c1.symbols.reduced.gmt#CHR14Q11,c1.symbols.reduced.gmt#CHRYQ11"
+       selected.gene.sets: ""
        dev.mode: "true"
        alt.delim: ""
        create.zip: "true"
 assertions:
-        jobStatus: failure
+        jobStatus: fail
         files:
             "stderr.txt":
-                diffCmd: ../grepMessage.sh java.lang.IllegalArgumentException..In.GeneSetMatrix..c1.symbols.reduced.gmt.no.GeneSet.found.with.name
+                diffCmd: ../grepMessage.sh Multiple.rows.mapped.to.the.symbol
                 # The following file is unused; keeping it just for reference.
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/subset_select/invalid_subset_not_in_gmt_test/stderr.txt"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/collapse/invalid_collapse_remap_only_test/stderr.txt"

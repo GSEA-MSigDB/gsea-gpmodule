@@ -10,7 +10,7 @@ params:
        phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/multi_tumor.cls"
        target.profile: "Prostate_versus_Leukemia.ALL-B"
        permutation.type: "phenotype"
-       collapse.dataset: "false"
+       collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        # Renaming result file for ease of testing.
        output.file.name: "multi_tumor.multi_tumor.cls_Prostate_versus_Leukemia.ALL-B.zip"

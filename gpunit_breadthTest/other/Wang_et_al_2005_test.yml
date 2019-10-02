@@ -10,7 +10,7 @@ params:
        phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/Wang_et_al_2005.cls"
        target.profile: ""
        permutation.type: "phenotype"
-       collapse.dataset: "false"
+       collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        # Renaming result file for ease of testing.
        output.file.name: "Wang_et_al_2005.Wang_et_al_2005.zip"

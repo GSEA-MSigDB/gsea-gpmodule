@@ -4,7 +4,7 @@
 JVMLevel=11
 LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00072\:999999999
 author=Aravind Subramanian, Pablo Tamayo, David Eby, Broad Institute
-commandLine=<libdir>/gsea-cli.sh GSEA -res <expression.dataset> -cls <phenotype.labels> -collapse <collapse.dataset> -mode <collapsing.mode.for.probe.sets.with.more.than.one.match> -norm <normalization.mode> -nperm <number.of.permutations> -permute <permutation.type> -rnd_type <randomization.mode> -scoring_scheme <scoring.scheme> -metric <metric.for.ranking.genes> -sort <gene.list.sorting.mode> -order <gene.list.ordering.mode> -include_only_symbols <omit.features.with.no.symbol.match> -make_sets <make.detailed.gene.set.report> -median <median.for.class.metrics> -num <number.of.markers> -plot_top_x <plot.graphs.for.the.top.sets.of.each.phenotype> -rnd_seed <random.seed> -save_rnd_lists <save.random.ranked.lists> -set_max <max.gene.set.size> -set_min <min.gene.set.size> <chip.platform.file> -gmx <gene.sets.database> -create_svgs <create.svgs> -create_gcts <create.gcts> -target_profile <target.profile>  <selected.gene.sets> <output.file.name> <alt.delim> -dev_mode <dev.mode> -zip_report <create.zip> -run_as_genepattern true
+commandLine=<libdir>/gsea-cli.sh GSEA -res <expression.dataset> -cls <phenotype.labels> -collapse <collapse.dataset> -mode <collapsing.mode.for.probe.sets.with.more.than.one.match> -norm <normalization.mode> -nperm <number.of.permutations> -permute <permutation.type> -rnd_type <randomization.mode> -scoring_scheme <scoring.scheme> -metric <metric.for.ranking.genes> -sort <gene.list.sorting.mode> -order <gene.list.ordering.mode> -include_only_symbols <omit.features.with.no.symbol.match> -make_sets <make.detailed.gene.set.report> -median <median.for.class.metrics> -num <number.of.markers> -plot_top_x <plot.graphs.for.the.top.sets.of.each.phenotype> -rnd_seed <random.seed> -save_rnd_lists <save.random.ranked.lists> -set_max <max.gene.set.size> -set_min <min.gene.set.size> <chip.platform.file> -gmx_list <gene.sets.database> -create_svgs <create.svgs> -create_gcts <create.gcts> -target_profile <target.profile>  <selected.gene.sets> <output.file.name> <alt.delim> -dev_mode <dev.mode> -zip_report <create.zip> -run_as_genepattern true
 cpuType=any
 taskDoc=doc.html
 description=Gene Set Enrichment Analysis
@@ -83,8 +83,8 @@ p5_value=
 
 p6_MODE=
 p6_TYPE=TEXT
-p6_default_value=true
-p6_description=Select true to have GSEA collapse each probe set in the expression dataset into a single vector for the gene, which gets identified by its gene symbol.
+p6_default_value=Collapse
+p6_description=Select whether to collapse each probe set in the expression dataset into a single vector for the gene, which gets identified by its gene symbol.  It is also possible to remap symbols from one namespace to another without collapsing (an error will occur if multiple source genes map to a single destination gene).  No_Collapse will use the dataset as-is.
 p6_fileFormat=
 p6_flag=
 p6_name=collapse.dataset
@@ -92,7 +92,7 @@ p6_optional=
 p6_prefix=
 p6_prefix_when_specified=
 p6_type=java.lang.String
-p6_value=false;true
+p6_value=No_Collaspe;Collapse;Remap_Only
 
 p7_MODE=
 p7_TYPE=TEXT
@@ -203,7 +203,7 @@ p14_value=
 p15_MODE=
 p15_TYPE=TEXT
 p15_default_value=Max_probe
-p15_description=Collapsing mode
+p15_description=Collapsing mode.  This has no effect when remapping symbols.
 p15_fileFormat=
 p15_flag=
 p15_name=collapsing.mode.for.probe.sets.with.more.than.one.match
@@ -211,7 +211,7 @@ p15_optional=
 p15_prefix=
 p15_prefix_when_specified=
 p15_type=java.lang.String
-p15_value=Max_probe;Median_of_probes
+p15_value=Max_probe;Median_of_probes;Mean_of_probes;Sum_probes
 
 p16_MODE=
 p16_TYPE=TEXT

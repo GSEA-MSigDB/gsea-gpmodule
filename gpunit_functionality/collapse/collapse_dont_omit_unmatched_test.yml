@@ -2,19 +2,19 @@
 #module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
 name: GSEA collapse_dont_omit_unmatched_test
-description: Test the GSEA 'collapse dataset' function, but don't omit symbols with no match.  Variation of user_gene_set_test.
+description: Test the GSEA 'collapse dataset' function, but don't omit symbols with no match.
 params:
-       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_hgu95av2.gct"
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes_hgu133a.gct"
        gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
        number.of.permutations: "10"
-       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53.cls"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes.cls"
        target.profile: ""
        permutation.type: "phenotype"
-       collapse.dataset: "true"
-       chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v20/input/HG_U95Av2.chip"
+       collapse.dataset: "Collapse"
+       chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v20/input/HG_U133A.chip"
        # Modifying the ZIP name here so that the diffCmd can find the RNK inside.  We could modify the diffCmd 
        # to be able to find it, but that makes the code somewhat complicated. 
-       output.file.name: "P53_hgu95av2_collapsed_to_symbols.zip"
+       output.file.name: "Diabetes_hgu133a_collapsed_to_symbols.zip"
        scoring.scheme: "weighted"
        metric.for.ranking.genes: "Signal2Noise"
        gene.list.sorting.mode: "real"
@@ -41,6 +41,6 @@ params:
 assertions:
         jobStatus: success
         files:
-            "P53_hgu95av2_collapsed_to_symbols.zip":
+            "Diabetes_hgu133a_collapsed_to_symbols.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/collapse/collapse_dont_omit_unmatched_test/P53_hgu95av2_collapsed_to_symbols.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/collapse/collapse_dont_omit_unmatched_test/Diabetes_hgu133a_collapsed_to_symbols.zip"

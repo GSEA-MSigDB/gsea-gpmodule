@@ -10,7 +10,7 @@ params:
        phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes.cls"
        target.profile: ""
        permutation.type: "phenotype"
-       collapse.dataset: "false"
+       collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        output.file.name: "<expression.dataset_basename>.zip"
        scoring.scheme: "weighted"
