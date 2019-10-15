@@ -10,8 +10,7 @@
         <property name="test.version" value="999999999"/>
         <property name="dest.dir" value="build" />
         <mkdir dir="build" />
-        <property name="dataBroadBaseUrl" value="https://data.broadinstitute.org/gsea-msigdb/gsea/software" />
-        <property name="githubBaseUrl" value="https://github.com/GSEA-MSigDB/gsea-desktop/releases/tag" />
+        <property name="dataBroadBaseUrl" value="https://data.broadinstitute.org/gsea-msigdb/gsea/software/desktop/4.0" />
     </target>
     
     <target name="init_devrelease" depends="init" description="internal target used by other init_devrelease_* targets; do not use directly">
@@ -25,7 +24,6 @@
         description="Init properties for a Dev module build with the GSEA Desktop Snapshot bundle">
         <!-- Override the default URL and release tag to point to the Snapshot -->
         <property name="desktop.release.tag" value="snapshot" />
-        <property name="bundleBaseUrl" value="${dataBroadBaseUrl}" />
     </target>
     
     <target name="init_devrelease_prodDesktop" depends="init_devrelease"
@@ -71,9 +69,9 @@
     </target>
 
     <target name="getDesktopBundle" depends="init">
-        <property name="bundleBaseUrl" value="${githubBaseUrl}" />
-        <property name="desktop.release.tag" value="v${desktop.prod.version}" />
-        <property name="bundleUrl" value="${bundleBaseUrl}/${desktop.release.tag}/GSEA_${desktop.release.tag}.zip" />
+        <property name="bundleBaseUrl" value="${dataBroadBaseUrl}" />
+        <property name="desktop.release.tag" value="${desktop.prod.version}" />
+        <property name="bundleUrl" value="${bundleBaseUrl}/GSEA_${desktop.release.tag}.zip" />
         <get src="${bundleUrl}" dest="${dest.dir}" skipexisting="true" />
         <unzip src="${dest.dir}/GSEA_${desktop.release.tag}.zip" dest="${dest.dir}/desktop" overwrite="false" />
         
