@@ -1,58 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2003-2017 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+  Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 -->
-
-<project basedir="" default="devReleaseModule" name="GSEA">
-
+<project basedir="" default="devLocalModule" name="GSEA">
     <target name="init">
         <tstamp />
+        <property environment="env" />
+        <property name="desktop.prod.version" value="4.0.2" />
         <property name="test.version" value="999999999"/>
         <property name="dest.dir" value="build" />
-
         <mkdir dir="build" />
-        <property name="appfile" value="gp-gsea.jar" />
-        <property name="inclds" value="org/genepattern/modules/gsea/*.java" />
-        <path id="library.classpath">
-            <fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
-            <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
-        </path>
-        <property name="java.target" value="1.8" />
+        <property name="dataBroadBaseUrl" value="https://data.broadinstitute.org/gsea-msigdb/gsea/software" />
+        <property name="githubBaseUrl" value="https://github.com/GSEA-MSigDB/gsea-desktop/releases/tag" />
     </target>
-
-    <target name="init_devrelease" depends="init">
-    	<!-- Set the full.version property so that it doesn't come in from release.properties -->
-        <property name="full.version" value="DEV_BUILD" />    	
+    
+    <target name="init_devrelease" depends="init" description="internal target used by other init_devrelease_* targets; do not use directly">
+        <!-- Set the full.version property so that it doesn't come in from release.properties -->
+        <property name="full.version" value="DEV_BUILD" />
         <property name="prereleasingModule" value="false" />
         <property name="quality.level" value="development" />
     </target>
+    
+    <target name="init_devrelease_snapshotDesktop" depends="init_devrelease" 
+        description="Init properties for a Dev module build with the GSEA Desktop Snapshot bundle">
+        <!-- Override the default URL and release tag to point to the Snapshot -->
+        <property name="desktop.release.tag" value="snapshot" />
+        <property name="bundleBaseUrl" value="${dataBroadBaseUrl}" />
+    </target>
+    
+    <target name="init_devrelease_prodDesktop" depends="init_devrelease"
+        description="Init properties for a Dev module build with the GSEA Desktop Production bundle">
+    </target>
+
+    <target name="init_devrelease_local" depends="init_devrelease"
+        description="Init properties for a Dev module build with a local build of the GSEA Desktop">
+        <!-- Include the extra libs needed for a Java 11 build.  These are required for modularity dependencies. -->
+        <condition property="check_GSEA_REPO_HOME"> <isset property="env.GSEA_REPO_HOME" /> </condition>
+        <fail unless="${check_GSEA_REPO_HOME}" message="Please set the GSEA_REPO_HOME environment variable to your local GSEA Git repository location." />
+
+        <!-- Make sure a Java 11 build exists in the repo -->
+        <condition property="check_GSEA_build_exists">
+            <resourceexists> <file file="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist" /> </resourceexists> 
+        </condition>
+        <fail unless="${check_GSEA_build_exists}" message="Please perform a Java 11 build in GSEA_REPO_HOME." />
+        
+        <!-- Only pick up disable-prefs.jar from the module repo.  All other jars come from the Desktop build -->
+        <zipfileset id="lib_jars" dir="lib" includes="disable-prefs.jar" prefix="modules" />
+        <zipfileset id="lib_patch_jars" dir="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist/lib" includes="*.jar" prefix="lib" />
+        <zipfileset id="module_jars" dir="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist/modules" includes="*.jar" prefix="modules" />
+        <zipfileset id="cli_scripts" dir="${env.GSEA_REPO_HOME}/scripts/java11" includes="gsea.args,gsea-cli.sh" prefix="" filemode="755" />
+    </target>
 
     <!-- Bump the build number and set the quality flag if we're doing a prerelease or release -->
-    <target name="init_prerelease" depends="init">
+    <target name="init_prerelease" depends="init" 
+        description="Init properties for a Prerelease module build with the GSEA Desktop Production bundle">
         <property name="prereleasingModule" value="true" />
         <property name="quality.level" value="preproduction" />
     </target>
 
-    <target name="init_release" depends="init">
+    <target name="init_release" depends="init"
+        description="Init properties for a Release module build with the GSEA Desktop Production bundle">
         <property name="prereleasingModule" value="false" />
         <property name="quality.level" value="production" />
     </target>
 
-    <target name="package" depends="init, clean, compile">
-        <jar basedir="build" defaultexcludes="true" includes="org/**" jarfile="${appfile}">
-        </jar>
-    </target>
-
     <target name="clean">
         <delete>
-            <fileset dir="build" includes="org/**" />
+            <fileset dir="build" includes="manifest,*DEV_BUILD*" />
         </delete>
     </target>
 
-    <target name="compile" depends="init">
-        <javac debug="true" defaultexcludes="true" deprecation="true" destdir="build" includes="${inclds}" optimize="false" proceed="false" srcdir="src" target="${java.target}" source="${java.target}">
-            <classpath refid="library.classpath" />
-        </javac>
+    <target name="getDesktopBundle" depends="init">
+        <property name="bundleBaseUrl" value="${githubBaseUrl}" />
+        <property name="desktop.release.tag" value="v${desktop.prod.version}" />
+        <property name="bundleUrl" value="${bundleBaseUrl}/${desktop.release.tag}/GSEA_${desktop.release.tag}.zip" />
+        <get src="${bundleUrl}" dest="${dest.dir}" skipexisting="true" />
+        <unzip src="${dest.dir}/GSEA_${desktop.release.tag}.zip" dest="${dest.dir}/desktop" overwrite="false" />
+        
+        <!-- Only pick up disable-prefs.jar from the module repo.  All other jars come from the Desktop build -->
+        <zipfileset id="lib_jars" dir="lib" includes="disable-prefs.jar" prefix="modules" />
+        <zipfileset id="lib_patch_jars" dir="${dest.dir}/desktop/GSEA_${desktop.release.tag}/lib" includes="*.jar" prefix="lib" />
+        <zipfileset id="module_jars" dir="${dest.dir}/desktop/GSEA_${desktop.release.tag}/modules" includes="*.jar" prefix="modules" />
+        <zipfileset id="cli_scripts" dir="${dest.dir}/desktop/GSEA_${desktop.release.tag}/" includes="gsea.args,gsea-cli.sh" prefix="" filemode="755" />
     </target>
 
     <target name="update-release-props" depends="init">
@@ -67,19 +96,26 @@
       <property file="release.properties" />
     </target>
 
-    <target name="create-zip" depends="addLSIDtoManifest,package">
-        <zip destfile="${dest.dir}/${ant.project.name}_v${full.version}.zip" whenempty="fail" defaultexcludes="true">
-            <fileset dir="." includes="manifest, *.html, *.json, LICENSE.txt, LICENSE-3RD-PARTY.txt, release.properties, ${appfile}" />
-            <fileset dir="lib" id="module.lib" includes="commons-lang3-3.4.jar,commons-io-2.4.jar,commons-cli-1.2.jar,disable-prefs.jar" />
-            <fileset dir="lib" id="module.lib" includes="gsea-3.0.jar" />
+    <target name="create-zip" depends="init,clean,addLSIDtoManifest">
+        <zip destfile="${dest.dir}/${ant.project.name}_v${full.version}.zip" whenempty="fail" defaultexcludes="true" duplicate="preserve">
+            <fileset dir="." includes="*.html, *.json, LICENSE*.txt, release.properties" />
+            <fileset dir="${dest.dir}" includes="manifest" />
+            <zipfileset refid="lib_jars" />
+            <zipfileset refid="module_jars" />
+            <zipfileset refid="lib_patch_jars" />
+            <zipfileset refid="cli_scripts" />
         </zip>
     </target>
 
-    <target name="devReleaseModule" depends="init_devrelease,load-release-props,create-zip,resetManifest" />
+    <target name="devLocalModule" depends="init_devrelease_local,load-release-props,create-zip" />
 
-    <target name="prereleaseModule" depends="init_prerelease,update-release-props,load-release-props,create-zip,resetManifest" />
+    <target name="devSnapshotModule" depends="init_devrelease_snapshotDesktop,getDesktopBundle,load-release-props,create-zip" />
+
+    <target name="devReleaseModule" depends="init_devrelease_prodDesktop,getDesktopBundle,load-release-props,create-zip" />
+
+    <target name="prereleaseModule" depends="init_prerelease,getDesktopBundle,update-release-props,load-release-props,create-zip" />
     
-    <target name="releaseModule" depends="init_release,update-release-props,load-release-props,create-zip,resetManifest" />
+    <target name="releaseModule" depends="init_release,getDesktopBundle,update-release-props,load-release-props,create-zip" />
     
     <target name="addLSIDtoManifest" depends="init,getLSID">
         <tstamp>
@@ -87,10 +123,10 @@
         </tstamp>
 
         <!-- Work on a copy of the manifest to avoid unnecessary churn in version control. -->
-        <copy file="manifest" tofile="manifest.tmp" preservelastmodified="true" overwrite="true" />
+        <copy file="manifest" tofile="${dest.dir}/manifest" preservelastmodified="true" overwrite="true" />
 
         <!-- NOTE: this will overwrite any LSID already in the manifest file -->
-        <propertyfile file="manifest">
+        <propertyfile file="${dest.dir}/manifest">
             <entry key="quality" value="${quality.level}" />
             <entry key="LSID" value="${LSID}" />
             <entry key="publicationDate" value="${publish.time}" />
@@ -103,12 +139,8 @@
             <isset property="release.version" />
         </condition>
         <condition property="LSID" value="${LSID.noVersion}:${full.version}" else="${LSID.noVersion}:${test.version}">
-            <not><equals arg1="${full.version}" arg2="DEV_BUILD" /></not>
+            <not><contains string="${full.version}" substring="DEV_BUILD" /></not>
         </condition>
         <echo>${LSID.key} = ${LSID}</echo>
-    </target>
-
-    <target name="resetManifest">
-        <move file="manifest.tmp" tofile="manifest" preservelastmodified="true" overwrite="true" failonerror="true" />
     </target>
 </project>

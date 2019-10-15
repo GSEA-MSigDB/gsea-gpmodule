@@ -1,0 +1,49 @@
+# Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
+module: GSEA
+name: GSEA invalid_alt_delim_2_test
+description: Invalid test, failing to use alt.delim with C1 synthetic Gene Sets containing commas
+params:
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes_collapsed_symbols.gct"
+       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.fake_for_alt_delim_test.pt1.gmt",
+                         "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.fake_for_alt_delim_test.pt2.gmt", 
+                         "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.fake_for_alt_delim_test.pt3.gmt", 
+                         "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.fake_for_alt_delim_test.pt4.gmt" 
+                         ]
+       number.of.permutations: "10"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes.cls"
+       target.profile: ""
+       permutation.type: "phenotype"
+       collapse.dataset: "No_Collapse"
+       #chip.platform.file: 
+       output.file.name: "<expression.dataset_basename>.zip"
+       scoring.scheme: "weighted"
+       metric.for.ranking.genes: "Signal2Noise"
+       gene.list.sorting.mode: "real"
+       gene.list.ordering.mode: "descending"
+       max.gene.set.size: "500"
+       min.gene.set.size: "15"
+       collapsing.mode.for.probe.sets.with.more.than.one.match: "Max_probe"
+       normalization.mode: "meandiv"
+       randomization.mode: "no_balance"
+       omit.features.with.no.symbol.match: "true"
+       median.for.class.metrics: "false"
+       number.of.markers: "100"
+       # Note that we use a fixed random seed rather than the 'timestamp' default so that we'll have reproducible test results
+       random.seed: "149"
+       create.svgs: "false"
+       create.gcts: "false"
+       save.random.ranked.lists: "false"
+       plot.graphs.for.the.top.sets.of.each.phenotype: "20"
+       make.detailed.gene.set.report: "false"
+       selected.gene.sets: "c1.symbols.reduced.fake_for_alt_delim_test.pt3.gmt#chr,8q11,c1.symbols.reduced.fake_for_alt_delim_test.pt1.gmt#chr,13q12,c1.symbols.reduced.fake_for_alt_delim_test.pt3.gmt#chr,1q25,c1.symbols.reduced.fake_for_alt_delim_test.pt1.gmt#chr,13q14,c1.symbols.reduced.fake_for_alt_delim_test.pt2.gmt#chr,1p35"
+       dev.mode: "true"
+       alt.delim: ""
+       create.zip: "true"
+assertions:
+        jobStatus: failure
+        files:
+            "stderr.txt":
+                diffCmd: ../grepMessage.sh java.lang.IllegalArgumentException..Gene.Set.selection.specifier..8q11..is.not.valid
+                # The following file is unused; keeping it just for reference.
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/subset_select/invalid_alt_delim_2_test/stderr.txt"

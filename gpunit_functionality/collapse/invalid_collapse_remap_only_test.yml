@@ -1,0 +1,45 @@
+# Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
+module: GSEA
+name: GSEA Invalid_collapse_remap_only_test
+description: Test the GSEA 'collapse dataset' function, causing an error on remapping only (no collapse) due to duplicates.  Variation of user_gene_set_test.
+params:
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_hgu95av2.gct"
+       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
+       number.of.permutations: "10"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53.cls"
+       target.profile: ""
+       permutation.type: "phenotype"
+       collapse.dataset: "Remap_Only"
+       chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v20/input/HG_U95Av2.chip"
+       output.file.name: "<expression.dataset_basename>.zip"
+       scoring.scheme: "weighted"
+       metric.for.ranking.genes: "Signal2Noise"
+       gene.list.sorting.mode: "real"
+       gene.list.ordering.mode: "descending"
+       max.gene.set.size: "500"
+       min.gene.set.size: "15"
+       collapsing.mode.for.probe.sets.with.more.than.one.match: "Max_probe"
+       normalization.mode: "meandiv"
+       randomization.mode: "no_balance"
+       omit.features.with.no.symbol.match: "true"
+       median.for.class.metrics: "false"
+       number.of.markers: "100"
+       # Note that we use a fixed random seed rather than the 'timestamp' default so that we'll have reproducible test results
+       random.seed: "149"
+       create.svgs: "false"
+       create.gcts: "false"
+       save.random.ranked.lists: "false"
+       plot.graphs.for.the.top.sets.of.each.phenotype: "20"
+       make.detailed.gene.set.report: "false"
+       selected.gene.sets: ""
+       dev.mode: "true"
+       alt.delim: ""
+       create.zip: "true"
+assertions:
+        jobStatus: fail
+        files:
+            "stderr.txt":
+                diffCmd: ../grepMessage.sh Multiple.rows.mapped.to.the.symbol
+                # The following file is unused; keeping it just for reference.
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/collapse/invalid_collapse_remap_only_test/stderr.txt"

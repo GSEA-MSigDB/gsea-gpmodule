@@ -3,10 +3,6 @@ Third-Party Components Acknowledgments for the GSEA module
 
 The GSEA module for GenePattern is distributed, in part, under and subject to the provisions of licenses for:
 
-Ant, Copyright 2000-2014 The Apache Software Foundation. All rights reserved. (http://ant.apache.org/).
-Apache Commons CLI, Copyright 2001-2009 The Apache Software Foundation. All rights reserved. (http://commons.apache.org/proper/commons-cli/).
-Apache Commons IO, Copyright 2002-2012 The Apache Software Foundation. All rights reserved. (http://commons.apache.org/proper/commons-io/).
-Apache Commons Lang, Copyright 2001-2015 The Apache Software Foundation. All rights reserved. (http://commons.apache.org/proper/commons-lang/).
-Disable Preferences, Copyright 2003-2011 Robert Slifka. (http://allaboutbalance.com/articles/disableprefs/)
+Disable Preferences, Copyright 2003-2011 Robert Slifka. (http://allaboutbalance.com/articles/disableprefs/).
 
-This module also relies on the GSEA Desktop JAR.  For acknowledgments related to that, see the GitHub repository at https://github.com/GSEA-MSigDB/gsea-desktop.
+This module also relies on the GSEA Desktop code base.  For acknowledgments related to that, see the GitHub repository at https://github.com/GSEA-MSigDB/gsea-desktop.
