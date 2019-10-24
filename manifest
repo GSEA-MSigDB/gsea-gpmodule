@@ -430,6 +430,6 @@ serializedModel=
 taskType=Gene List Selection
 category=beta
 userid=eby@broadinstitute.org
-version=Beta series\: Updated to use the GSEA v4.0.x code base.  OpenJDK 11 port.  Updated to give access to MSigDB v7.0.  Java code moved into the GSEA Desktop code base.
+version=Updated to use the GSEA v4.0.x code base.  OpenJDK 11 port.  Updated to give access to MSigDB v7.0.  Java code moved into the GSEA Desktop code base.
 
 publicationDate=10/05/2018 04\:51 
