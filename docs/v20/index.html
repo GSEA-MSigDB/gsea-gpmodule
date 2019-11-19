@@ -4,7 +4,7 @@
 -->
 <!-- saved from url=(0083)http://software.broadinstitute.org/cancer/software/genepattern/modules/docs/GSEA/18 -->
 <html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>GSEA (v20.0.3)</title>
+  <title>GSEA (v20.0.4)</title>
   <link href="./application.css" media="all" rel="stylesheet">
   <script src="./application.js"></script><style>.cke{visibility:hidden;}</style><style type="text/css"></style>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +18,7 @@
 
 	<div class="gp-content-header fluid">
 	<div class="container">
-		<h1>GSEA (v20.0.3)</h1>
+		<h1>GSEA (v20.0.4)</h1>
 	</div>
 </div>
 <div class="container">
@@ -65,6 +65,8 @@
 
 <p>The GSEA GenePattern module uses either categorical or continuous phenotype data for its analysis.&nbsp; In the case of a categorical phenotype, a dataset would contain two different classes of samples, such as "tumor" and "normal."&nbsp; In the case of a continuous phenotype, a dataset would contain a numerical value for each sample.&nbsp; Examples of numerical profiles include the expression level of a specific gene or a measure of cell viability over the course of a time series experiment. The GSEA desktop application, available on the <a href="http://www.gsea-msigdb.org/gsea/index.jsp">GSEA website</a>, has additional functionalities.&nbsp; For instance, the GSEA desktop application can conduct an enrichment analysis against a ranked list of genes, or analyze the leading-edge subsets within each gene set.&nbsp; Many of these capabilities are also available in separate GP modules (see GSEAPreranked and GSEALeadingEdgeViewer).&nbsp;</p>
 
+<p><strong>If you are using GSEA on RNA-seq data, please read <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Using_RNA-seq_Datasets_with_GSEA" target="_blank">these guidelines</a>.</strong></p>
+
 <h2>Algorithm</h2>
 
 <p>GSEA first ranks the genes based on a measure of each gene's differential expression with respect to the two phenotypes (for example, tumor versus normal) or correlation with a continuous phenotype.&nbsp; Then the entire ranked list is used to assess how the genes of each gene set are distributed across the ranked list.&nbsp; To do this, GSEA walks down the ranked list of genes, increasing a running-sum statistic when a gene belongs to the set and decreasing it when the gene does not.&nbsp; A simplified example is shown in the following figure.</p>
@@ -86,8 +88,6 @@
 <p>The nominal p-values need to be corrected to adjust for multiple hypothesis testing. For a large number of sets (rule of thumb: more than 30), we recommend paying attention to the False Discovery Rate (FDR) q-values: consider a set significantly enriched if its NES has an FDR q-value below 0.25.</p>
 
 <p>For more information, see <a href="http://www.gsea-msigdb.org/gsea">http://www.gsea-msigdb.org/gsea</a>.</p>
-
-<p><strong>If you are using GSEA on RNA-seq data, please read <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Using_RNA-seq_Datasets_with_GSEA" target="_blank">these guidelines</a>.</strong></p>
 
 <h2>Known Issues</h2>
 
@@ -411,6 +411,11 @@ will always be created directly.</p>
 					</tr>
 				</thead>
 				<tbody>
+                        <tr>
+                            <td>20.0.4</td>
+                            <td>2019-11-19</td>
+                            <td>Minor documentation update.</td>
+                        </tr>
                         <tr>
                             <td>20.0.3</td>
                             <td>2019-10-24</td>
