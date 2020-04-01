@@ -1,4 +1,4 @@
-# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+# Copyright (c) 2003-2020 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 #!/bin/sh
 execDir=`dirname $0`
 
@@ -24,10 +24,9 @@ diff -i --strip-trailing-cr -q $diffDir1/edb/gene_sets.gmt $diffDir2/edb/gene_se
 status=$(( $? + status ))
 
 # Checking existence of report files.  We're working out of diffDir1 as that is from the 'expected' result
-# For XLS, just check that the same files are present in both as comparing contents is not robust.
 # Note: we exclude certain files as they contain numeric timestamps.  It might be possible to clean those up
 #       but for now the test is sufficient without them.
-binFileList=`ls -1 $diffDir1/*.xls| grep -v 'gsea_report_.*.xls'| grep -v 'ranked_gene_list_.*.xls'`
+binFileList=`ls -1 $diffDir1/*.tsv| grep -v 'gsea_report_.*.tsv'| grep -v 'ranked_gene_list_.*.tsv'`
 for binFile in $binFileList; do
    baseBinFile=`basename $binFile`
    if [ -s $diffDir2/$baseBinFile ]; then
