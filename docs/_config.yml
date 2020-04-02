@@ -1,0 +1,5 @@
+theme: jekyll-theme-leap-day
+title: GSEA GenePattern Module Documentation
+show_downloads: false
+github:
+  is_project_page: false
