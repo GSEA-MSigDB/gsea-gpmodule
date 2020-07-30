@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+  Copyright (c) 2003-2020 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 -->
 <project basedir="" default="devLocalModule" name="GSEA">
     <target name="init">
-        <tstamp />
+        <tstamp>
+            <format property="publish.time" pattern="MM/dd/yyyy HH:mm " />
+            <format property="publish.time.short" pattern="MM/dd/yyyy " />
+        </tstamp>
         <property environment="env" />
         <property name="desktop.prod.version" value="4.0.3" />
         <property name="test.version" value="999999999"/>
@@ -16,6 +19,7 @@
     <target name="init_devrelease" depends="init" description="internal target used by other init_devrelease_* targets; do not use directly">
         <!-- Set the full.version property so that it doesn't come in from release.properties -->
         <property name="full.version" value="DEV_BUILD" />
+        <property name="version.date" value="${publish.time}" />
         <property name="prereleasingModule" value="false" />
         <property name="quality.level" value="development" />
     </target>
@@ -52,12 +56,14 @@
     <!-- Bump the build number and set the quality flag if we're doing a prerelease or release -->
     <target name="init_prerelease" depends="init" 
         description="Init properties for a Prerelease module build with the GSEA Desktop Production bundle">
+        <property name="version.date" value="${publish.time}" />
         <property name="prereleasingModule" value="true" />
         <property name="quality.level" value="preproduction" />
     </target>
 
     <target name="init_release" depends="init"
         description="Init properties for a Release module build with the GSEA Desktop Production bundle">
+        <property name="version.date" value="${publish.time.short}" />
         <property name="prereleasingModule" value="false" />
         <property name="quality.level" value="production" />
     </target>
@@ -123,11 +129,18 @@
         <!-- Work on a copy of the manifest to avoid unnecessary churn in version control. -->
         <copy file="manifest" tofile="${dest.dir}/manifest" preservelastmodified="true" overwrite="true" />
 
+    	<loadproperties srcfile="${dest.dir}/manifest" prefix="meta" prefixValues="false">
+    		<filterchain>
+    			<linecontains><contains value="version=" /></linecontains>
+    		</filterchain>
+    	</loadproperties>
+
         <!-- NOTE: this will overwrite any LSID already in the manifest file -->
         <propertyfile file="${dest.dir}/manifest">
             <entry key="quality" value="${quality.level}" />
             <entry key="LSID" value="${LSID}" />
             <entry key="publicationDate" value="${publish.time}" />
+        	<entry key="version" value="${version.date}: ${meta.version}" />
         </propertyfile>
     </target>
 
