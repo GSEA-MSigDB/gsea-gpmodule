@@ -1,4 +1,4 @@
-# GSEA (v20.0.x)
+# GSEA (v20.1.x)
 
 Gene Set Enrichment Analysis
 
@@ -14,7 +14,7 @@ for GSEA questions.
 team](http://software.broadinstitute.org/cancer/software/genepattern/contact)
 for GenePattern issues.
 
-**GSEA Version:** 4.0.3
+**GSEA Version:** 4.1.0
 
 ## Description
 
@@ -199,9 +199,9 @@ GSEA User Guide:
 
 GSEA website: <http://www.gsea-msigdb.org/>
 
-This version of the module is based on the GSEA v4.0.2 code base. See
+This version of the module is based on the GSEA v4.1.x code base. See
 the [Release
-Notes](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/GSEA_v4.0.x_Release_Notes)
+Notes](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/GSEA_v4.1.x_Release_Notes)
 for new features and other notable changes.
 
 ## Parameters
@@ -476,6 +476,11 @@ Java
 </tr>
 </thead>
 <tbody>
+<tr class="even">
+<td align="left">20.1.0</td>
+<td align="left">2020-7-30</td>
+<td align="left">Updated to use the GSEA v4.1.0 code base.</td>
+</tr>
 <tr class="odd">
 <td align="left">20.0.5</td>
 <td align="left">2020-4-2</td>
