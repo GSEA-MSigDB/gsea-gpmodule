@@ -2,7 +2,7 @@
 <!--
   Copyright (c) 2003-2020 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 -->
-<project basedir="" default="devLocalModule" name="GSEA">
+<project basedir="" default="devReleaseModule" name="GSEA">
     <target name="init">
         <tstamp>
             <format property="publish.time" pattern="MM/dd/yyyy HH:mm " />
@@ -13,7 +13,6 @@
         <property name="test.version" value="999999999"/>
         <property name="dest.dir" value="build" />
         <mkdir dir="build" />
-        <property name="dataBroadBaseUrl" value="https://data.broadinstitute.org/gsea-msigdb/gsea/software/desktop/4.1" />
     </target>
     
     <target name="init_devrelease" depends="init" description="internal target used by other init_devrelease_* targets; do not use directly">
@@ -23,34 +22,14 @@
         <property name="prereleasingModule" value="false" />
         <property name="quality.level" value="development" />
     </target>
-    
-    <target name="init_devrelease_snapshotDesktop" depends="init_devrelease" 
-        description="Init properties for a Dev module build with the GSEA Desktop Snapshot bundle">
-        <!-- Override the default URL and release tag to point to the Snapshot -->
-        <property name="desktop.release.tag" value="snapshot" />
-    </target>
-    
+
+	<!-- Note: we formerly had support for building with a local bundle.  We no longer have that
+	     at this time with our switch to Docker, though we will want to bring back something similar
+	     at some point (as support for local images).
+	-->
+	
     <target name="init_devrelease_prodDesktop" depends="init_devrelease"
         description="Init properties for a Dev module build with the GSEA Desktop Production bundle">
-    </target>
-
-    <target name="init_devrelease_local" depends="init_devrelease"
-        description="Init properties for a Dev module build with a local build of the GSEA Desktop">
-        <!-- Include the extra libs needed for a Java 11 build.  These are required for modularity dependencies. -->
-        <condition property="check_GSEA_REPO_HOME"> <isset property="env.GSEA_REPO_HOME" /> </condition>
-        <fail unless="${check_GSEA_REPO_HOME}" message="Please set the GSEA_REPO_HOME environment variable to your local GSEA Git repository location." />
-
-        <!-- Make sure a Java 11 build exists in the repo -->
-        <condition property="check_GSEA_build_exists">
-            <resourceexists> <file file="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist" /> </resourceexists> 
-        </condition>
-        <fail unless="${check_GSEA_build_exists}" message="Please perform a Java 11 build in GSEA_REPO_HOME." />
-        
-        <!-- Only pick up disable-prefs.jar from the module repo.  All other jars come from the Desktop build -->
-        <zipfileset id="lib_jars" dir="lib" includes="disable-prefs.jar" prefix="modules" />
-        <zipfileset id="lib_patch_jars" dir="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist/lib" includes="*.jar" prefix="lib" />
-        <zipfileset id="module_jars" dir="${env.GSEA_REPO_HOME}/build_java11/GSEA-dist/modules" includes="*.jar" prefix="modules" />
-        <zipfileset id="cli_scripts" dir="${env.GSEA_REPO_HOME}/scripts/java11" includes="gsea.args,gsea-cli.sh" prefix="" filemode="755" />
     </target>
 
     <!-- Bump the build number and set the quality flag if we're doing a prerelease or release -->
@@ -69,23 +48,7 @@
     </target>
 
     <target name="clean">
-        <delete>
-            <fileset dir="build" includes="manifest,*DEV_BUILD*" />
-        </delete>
-    </target>
-
-    <target name="getDesktopBundle" depends="init">
-        <property name="bundleBaseUrl" value="${dataBroadBaseUrl}" />
-        <property name="desktop.release.tag" value="${desktop.prod.version}" />
-        <property name="bundleUrl" value="${bundleBaseUrl}/GSEA_${desktop.release.tag}.zip" />
-        <get src="${bundleUrl}" dest="${dest.dir}" skipexisting="true" />
-        <unzip src="${dest.dir}/GSEA_${desktop.release.tag}.zip" dest="${dest.dir}/desktop" overwrite="false" />
-        
-        <!-- Only pick up disable-prefs.jar from the module repo.  All other jars come from the Desktop build -->
-        <zipfileset id="lib_jars" dir="lib" includes="disable-prefs.jar" prefix="modules" />
-        <zipfileset id="lib_patch_jars" dir="${dest.dir}/desktop/GSEA_${desktop.release.tag}/lib" includes="*.jar" prefix="lib" />
-        <zipfileset id="module_jars" dir="${dest.dir}/desktop/GSEA_${desktop.release.tag}/modules" includes="*.jar" prefix="modules" />
-        <zipfileset id="cli_scripts" dir="${dest.dir}/desktop/GSEA_${desktop.release.tag}/" includes="gsea.args,gsea-cli.sh" prefix="" filemode="755" />
+        <delete dir="build" />
     </target>
 
     <target name="update-release-props" depends="init">
@@ -104,22 +67,14 @@
         <zip destfile="${dest.dir}/${ant.project.name}_v${full.version}.zip" whenempty="fail" defaultexcludes="true" duplicate="preserve">
             <fileset dir="." includes="*.html, *.json, LICENSE*.txt, release.properties" />
             <fileset dir="${dest.dir}" includes="manifest" />
-            <zipfileset refid="lib_jars" />
-            <zipfileset refid="module_jars" />
-            <zipfileset refid="lib_patch_jars" />
-            <zipfileset refid="cli_scripts" />
         </zip>
     </target>
 
-    <target name="devLocalModule" depends="init_devrelease_local,load-release-props,create-zip" />
+    <target name="devReleaseModule" depends="init_devrelease_prodDesktop,load-release-props,create-zip" />
 
-    <target name="devSnapshotModule" depends="init_devrelease_snapshotDesktop,getDesktopBundle,load-release-props,create-zip" />
-
-    <target name="devReleaseModule" depends="init_devrelease_prodDesktop,getDesktopBundle,load-release-props,create-zip" />
-
-    <target name="prereleaseModule" depends="init_prerelease,getDesktopBundle,update-release-props,load-release-props,create-zip" />
+    <target name="prereleaseModule" depends="init_prerelease,update-release-props,load-release-props,create-zip" />
     
-    <target name="releaseModule" depends="init_release,getDesktopBundle,update-release-props,load-release-props,create-zip" />
+    <target name="releaseModule" depends="init_release,update-release-props,load-release-props,create-zip" />
     
     <target name="addLSIDtoManifest" depends="init,getLSID">
         <tstamp>

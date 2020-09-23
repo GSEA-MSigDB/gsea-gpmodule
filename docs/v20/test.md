@@ -1,4 +1,4 @@
-# GSEA (v20.1.x)
+# GSEA (v20.2.x)
 
 Gene Set Enrichment Analysis
 
@@ -476,6 +476,11 @@ Java
 </tr>
 </thead>
 <tbody>
+<tr class="odd">
+<td align="left">20.2.0</td>
+<td align="left">2020-9-23</td>
+<td align="left">Updated to MSigDB v7.2. Updated to use dedicated Docker container.</td>
+</tr>
 <tr class="even">
 <td align="left">20.1.0</td>
 <td align="left">2020-7-30</td>
