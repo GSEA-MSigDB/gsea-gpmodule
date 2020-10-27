@@ -211,7 +211,7 @@ p15_optional=
 p15_prefix=
 p15_prefix_when_specified=
 p15_type=java.lang.String
-p15_value=Max_probe;Median_of_probes;Mean_of_probes;Sum_probes
+p15_value=Max_probe;Median_of_probes;Mean_of_probes;Sum_of_probes
 
 p16_MODE=
 p16_TYPE=TEXT
@@ -430,6 +430,6 @@ serializedModel=
 taskType=Gene List Selection
 category=
 userid=eby@broadinstitute.org
-version=Updated to MSigDB v7.2. Updated to use dedicated Docker container.
+version=Fixed a bug in the Collapse Sum mode.
 
 publicationDate=10/05/2018 04\:51 
