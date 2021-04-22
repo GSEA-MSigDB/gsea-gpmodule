@@ -476,6 +476,11 @@ Java
 </tr>
 </thead>
 <tbody>
+<tr class="odd">
+<td align="left">20.2.4</td>
+<td align="left">2021-4-22</td>
+<td align="left">Fixed minor typo.</td>
+</tr>
 <tr class="even">
 <td align="left">20.2.3</td>
 <td align="left">2021-4-2</td>

@@ -428,8 +428,8 @@ requiredPatchLSIDs=
 requiredPatchURLs=
 serializedModel=
 taskType=Pathway Analysis
-category=gsea,pathway analysis
+categories=gsea;pathway analysis
 userid=eby@broadinstitute.org
-version=Updated for MSigDB v7.4.
+version=Fixed minor typo.
 
 publicationDate=10/05/2018 04\:51 
