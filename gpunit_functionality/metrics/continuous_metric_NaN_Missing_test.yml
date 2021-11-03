@@ -1,0 +1,51 @@
+# Copyright (c) 2003-2021 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
+module: GSEA
+name: GSEA continuous_metric_NaN_Missing_test
+description: Test the GSEA continuous metric handling NaN and Missing values.  Tests are centered on HTR4, HTR7, NPAL2, NPAL3, GSTK1.
+params:
+       # Using a dataset needing collapse because it happens to have missing & NaN values
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes_hgu133a_NaN_missing_vals.gct"
+       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
+       number.of.permutations: "10"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes_6samples_fake_as_cont_pheno.cls"
+       target.profile: ""
+       permutation.type: "phenotype"
+       collapse.dataset: "Collapse"
+       chip.platform.file: "<%gpunit.testData%>gpunit/GSEA/v20/input/HG_U133A.chip"
+       # Modifying the ZIP name here so that the diffCmd can find the RNK inside.  We could modify the diffCmd 
+       # to be able to find it, but that makes the code somewhat complicated. 
+       output.file.name: "Diabetes_hgu133a_NaN_missing_vals_collapsed_to_symbols.zip"
+       scoring.scheme: "weighted"
+       metric.for.ranking.genes: "Spearman"
+       gene.list.sorting.mode: "real"
+       gene.list.ordering.mode: "descending"
+       max.gene.set.size: "500"
+       min.gene.set.size: "15"
+       collapsing.mode.for.probe.sets.with.more.than.one.match: "Max_probe"
+       normalization.mode: "meandiv"
+       randomization.mode: "no_balance"
+       omit.features.with.no.symbol.match: "true"
+       median.for.class.metrics: "false"
+       number.of.markers: "100"
+       # Note that we use a fixed random seed rather than the 'timestamp' default so that we'll have reproducible test results
+       random.seed: "149"
+       create.svgs: "false"
+       create.gcts: "true"
+       save.random.ranked.lists: "false"
+       plot.graphs.for.the.top.sets.of.each.phenotype: "20"
+       make.detailed.gene.set.report: "false"
+       selected.gene.sets: ""
+       dev.mode: "true"
+       alt.delim: ""
+       create.zip: "true"
+assertions:
+        jobStatus: success
+        files:
+            "Diabetes_hgu133a_NaN_missing_vals_collapsed_to_symbols.zip":
+                diffCmd: ../diffGseaResults.sh
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/metrics/continuous_metric_NaN_Missing_test/Diabetes_hgu133a_NaN_missing_vals_collapsed_to_symbols.zip"
+            "stdout.txt":
+                diffCmd: ../grepMessages.sh
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/metrics/continuous_metric_NaN_Missing_test/stdoutMatches.txt"
+                

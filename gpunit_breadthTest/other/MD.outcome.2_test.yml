@@ -13,7 +13,7 @@ params:
        collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        # Renaming result file for ease of testing.
-       output.file.name: "MD.MD.outcome.2.cls_0_versus_NA.zip"
+       output.file.name: "MD.outcome.MD.outcome.2.cls_0_versus_NA.zip"
        scoring.scheme: "weighted"
        metric.for.ranking.genes: "Signal2Noise"
        gene.list.sorting.mode: "real"
@@ -40,6 +40,6 @@ params:
 assertions:
         jobStatus: success
         files:
-            "MD.MD.outcome.2.cls_0_versus_NA.zip":
+            "MD.outcome.MD.outcome.2.cls_0_versus_NA.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/MD.outcome.2_test/MD.MD.outcome.2.cls_0_versus_NA.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/MD.outcome.2_test/MD.outcome.MD.outcome.2.cls_0_versus_NA.zip"

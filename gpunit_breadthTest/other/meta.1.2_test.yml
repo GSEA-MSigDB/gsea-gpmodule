@@ -13,7 +13,7 @@ params:
        collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        # Renaming result file for ease of testing.
-       output.file.name: "meta.meta.1.2.cls_breast_versus_colon.zip"
+       output.file.name: "meta.1.meta.1.2.cls_breast_versus_colon.zip"
        scoring.scheme: "weighted"
        metric.for.ranking.genes: "Signal2Noise"
        gene.list.sorting.mode: "real"
@@ -40,6 +40,6 @@ params:
 assertions:
         jobStatus: success
         files:
-            "meta.meta.1.2.cls_breast_versus_colon.zip":
+            "meta.1.meta.1.2.cls_breast_versus_colon.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/meta.1.2_test/meta.meta.1.2.cls_breast_versus_colon.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/meta.1.2_test/meta.1.meta.1.2.cls_breast_versus_colon.zip"

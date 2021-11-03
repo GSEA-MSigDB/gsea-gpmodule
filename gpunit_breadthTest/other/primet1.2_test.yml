@@ -13,7 +13,7 @@ params:
        collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        # Renaming result file for ease of testing.
-       output.file.name: "primet1.zip"
+       output.file.name: "primet1.2.zip"
        scoring.scheme: "weighted"
        metric.for.ranking.genes: "Signal2Noise"
        gene.list.sorting.mode: "real"
@@ -40,6 +40,6 @@ params:
 assertions:
         jobStatus: success
         files:
-            "primet1.zip":
+            "primet1.2.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/primet1.2_test/primet1.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/primet1.2_test/primet1.2.zip"
