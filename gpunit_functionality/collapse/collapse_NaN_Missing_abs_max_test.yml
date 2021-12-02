@@ -1,8 +1,8 @@
 # Copyright (c) 2003-2021 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 #module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
-name: GSEA collapse_NaN_Missing_max_test
-description: Test the GSEA 'collapse dataset' function handling Infinite, NaN and Missing values, collapse to max of probes.  Tests are centered on HTR4, HTR6, FLJ22639, HTR7, NPAL2, NPAL3, GSTK1, BCR.
+name: GSEA collapse_NaN_Missing_abs_max_test
+description: Test the GSEA 'collapse dataset' function handling Infinite, NaN and Missing values, collapse to absolute max of probes.  Tests are centered on HTR4, HTR6, FLJ22639, HTR7, NPAL2, NPAL3, GSTK1, BCR.
 params:
        expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/Diabetes_hgu133a_NaN_missing_vals.gct"
        gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
@@ -22,7 +22,7 @@ params:
        gene.list.ordering.mode: "descending"
        max.gene.set.size: "500"
        min.gene.set.size: "15"
-       collapsing.mode.for.probe.sets.with.more.than.one.match: "Max_probe"
+       collapsing.mode.for.probe.sets.with.more.than.one.match: "Abs_max_of_probes"
        normalization.mode: "meandiv"
        randomization.mode: "no_balance"
        omit.features.with.no.symbol.match: "true"
@@ -44,7 +44,7 @@ assertions:
         files:
             "Diabetes_hgu133a_NaN_missing_vals_collapsed_to_symbols.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/collapse/collapse_NaN_Missing_max_test/Diabetes_hgu133a_NaN_missing_vals_collapsed_to_symbols.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/collapse/collapse_NaN_Missing_abs_max_test/Diabetes_hgu133a_NaN_missing_vals_collapsed_to_symbols.zip"
             "stdout.txt":
                 diffCmd: ../grepMessages.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/collapse/collapse_NaN_Missing_max_test/stdoutMatches.txt"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/collapse/collapse_NaN_Missing_abs_max_test/stdoutMatches.txt"
