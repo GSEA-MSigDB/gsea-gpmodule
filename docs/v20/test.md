@@ -301,6 +301,9 @@ For descriptions of the ranking metrics, see <a href="http://www.gsea-msigdb.org
 <li>Median_of_probes: For each sample, use the median expression value for the probe set.</li>
 <li>Mean_of_probes: For each sample, use the mean expression value for the probe set.</li>
 <li>Sum_of_probes: For each sample, sum all the expression values of the probe set.</li>
+<li>Abs_max_of_probes: For each sample, use the expression value for the probe set with the maximum **absolute value**.  Note that each value retains its original sign but is chosen based on absolute value.
+In other words, the largest magnitude value is used.  While this method is useful with computational-based input datasets it is generally **not recommended** for use with quantification-based expression 
+measures such as counts or microarray fluorescence.</li>
 </ul></td>
 </tr>
 <tr class="even">
@@ -444,6 +447,8 @@ can be decompressed using 'gunzip' on Mac or Linux and 7-Zip on Windows
 The datasets backing all the heatmap images from the Enrichment Report
 for use in external visualizers or analysis tools. These will have the
 same name as the corresponding image but instead with a GCT extension.
+When Collapse or Remap_Only is set, the collapsed dataset is also saved 
+as a GCT.  These files will be created if the Create GCTs option is true.
 
 ## Platform Dependencies
 
@@ -473,7 +478,7 @@ Java
 <tr class="even">
 <td align="left">20.3.0</td>
 <td align="left">2021-11-2</td>
-<td align="left">Updated with the GSEA Desktop 4.2.0 code base with numerous bug fixes.  Fixed some issues handling datasets with missing values.  Introduced the Spearman metric.  Fixed issue with the min-sample check with gene_set permutation mode. Changed the FDR q-value scale on the NES vs Significance plot.</td>
+<td align="left">Updated with the GSEA Desktop 4.2.0 code base with numerous bug fixes.  Adds the Abs_max_of_probes collapse mode.  Fixed some issues handling datasets with missing values.  Added the Spearman metric.  Fixed issue with the min-sample check with gene_set permutation mode.  Improved warnings and logging.  Changed the FDR q-value scale on the NES vs Significance plot.</td>
 </tr>
 <tr class="odd">
 <td align="left">20.2.4</td>

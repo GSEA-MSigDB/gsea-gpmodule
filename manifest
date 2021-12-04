@@ -146,7 +146,7 @@ p10_optional=
 p10_prefix=
 p10_prefix_when_specified=
 p10_type=java.lang.String
-p10_value=Signal2Noise;tTest;Ratio_of_Classes;Diff_of_Classes;log2_Ratio_of_Classes;Pearson;Cosine;Manhatten\=Manhattan;Euclidean
+p10_value=Signal2Noise;tTest;Ratio_of_Classes;Diff_of_Classes;log2_Ratio_of_Classes;Pearson;Spearman;Cosine;Manhatten\=Manhattan;Euclidean
 
 p11_MODE=
 p11_TYPE=TEXT
@@ -211,7 +211,7 @@ p15_optional=
 p15_prefix=
 p15_prefix_when_specified=
 p15_type=java.lang.String
-p15_value=Max_probe;Median_of_probes;Mean_of_probes;Sum_of_probes
+p15_value=Max_probe;Median_of_probes;Mean_of_probes;Sum_of_probes;Abs_max_of_probes
 
 p16_MODE=
 p16_TYPE=TEXT
@@ -417,6 +417,6 @@ serializedModel=
 taskType=Pathway Analysis
 categories=gsea;pathway analysis
 userid=eby@broadinstitute.org
-version=Updated with the GSEA Desktop 4.2.0 code base with numerous bug fixes.  Fixed some issues handling datasets with missing values.  Introduced the Spearman metric.  Fixed issue with the min-sample check with gene_set permutation mode. Changed the FDR q-value scale on the NES vs Significance plot.
+version=Updated with the GSEA Desktop 4.2.0 code base with numerous bug fixes.  Adds the Abs_max_of_probes collapse mode.  Fixed some issues handling datasets with missing values.  Added the Spearman metric.  Fixed issue with the min-sample check with gene_set permutation mode.  Improved warnings and logging.  Changed the FDR q-value scale on the NES vs Significance plot.
 
 publicationDate=10/05/2018 04\:51 
