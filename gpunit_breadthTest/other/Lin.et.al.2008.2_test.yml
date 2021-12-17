@@ -13,7 +13,7 @@ params:
        collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        # Renaming result file for ease of testing.
-       output.file.name: "Lin.et.al.2008.zip"
+       output.file.name: "Lin.et.al.2008.2.zip"
        scoring.scheme: "weighted"
        metric.for.ranking.genes: "Signal2Noise"
        gene.list.sorting.mode: "real"
@@ -40,6 +40,6 @@ params:
 assertions:
         jobStatus: success
         files:
-            "Lin.et.al.2008.zip":
+            "Lin.et.al.2008.2.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/Lin.et.al.2008.2_test/Lin.et.al.2008.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/Lin.et.al.2008.2_test/Lin.et.al.2008.2.zip"

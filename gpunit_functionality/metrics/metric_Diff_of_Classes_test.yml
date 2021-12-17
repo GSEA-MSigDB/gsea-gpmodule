@@ -1,21 +1,20 @@
-# Copyright (c) 2003-2018 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
-#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:15
+# Copyright (c) 2003-2021 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
-name: GSEA MD.outcome.BCAT_test
-description: Testing with the MD.outcome.BCAT dataset and (mostly) default param settings.  Part of a breadth-oriented test suite
+name: GSEA metric_Diff_of_Classes_test
+description: Test GSEA using the Diff_of_Classes metric.  Variation of user_gene_set_test with a reduced dataset.
 params:
-       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/MD.outcome.BCAT.gct"
-       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/c1.all.v6.0.symbols.gmt" ]
-       number.of.permutations: "1000"
-       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/breadthTest/input/MD.outcome.BCAT.cls"
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_14samples_collapsed_symbols.gct"
+       gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
+       number.of.permutations: "10"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_14samples.cls"
        target.profile: ""
        permutation.type: "phenotype"
        collapse.dataset: "No_Collapse"
        #chip.platform.file: 
-       # Renaming result file for ease of testing.
-       output.file.name: "MD.outcome.BCAT.zip"
+       output.file.name: "<expression.dataset_basename>.zip"
        scoring.scheme: "weighted"
-       metric.for.ranking.genes: "Signal2Noise"
+       metric.for.ranking.genes: "Diff_of_Classes"
        gene.list.sorting.mode: "real"
        gene.list.ordering.mode: "descending"
        max.gene.set.size: "500"
@@ -40,6 +39,6 @@ params:
 assertions:
         jobStatus: success
         files:
-            "MD.outcome.BCAT.zip":
+            "P53_14samples_collapsed_symbols.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/MD.outcome.BCAT_test/MD.outcome.BCAT.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/metrics/metric_Diff_of_Classes_test/P53_14samples_collapsed_symbols.zip"

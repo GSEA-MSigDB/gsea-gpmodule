@@ -1,20 +1,20 @@
-# Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+# Copyright (c) 2003-2021 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
 #module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
 module: GSEA
-name: GSEA metric_Diff_of_Means_test
-description: Test GSEA using the Diff_of_Means metric.  Variation of user_gene_set_test with a reduced dataset.
+name: GSEA too_few_samples_gene_set_perm_test
+description: Provide a proper error message when there are too few samples for particular metrics, run with the gene_set permutation mode
 params:
-       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_14samples_collapsed_symbols.gct"
+       expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_6samples_collapsed_symbols.gct"
        gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
        number.of.permutations: "10"
-       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_14samples.cls"
+       phenotype.labels: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_too_few_samples.cls"
        target.profile: ""
-       permutation.type: "phenotype"
+       permutation.type: "gene_set"
        collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        output.file.name: "<expression.dataset_basename>.zip"
        scoring.scheme: "weighted"
-       metric.for.ranking.genes: "Diff_of_Means"
+       metric.for.ranking.genes: "Signal2Noise"
        gene.list.sorting.mode: "real"
        gene.list.ordering.mode: "descending"
        max.gene.set.size: "500"
@@ -37,8 +37,9 @@ params:
        alt.delim: ""
        create.zip: "true"
 assertions:
-        jobStatus: success
+        jobStatus: fail
         files:
-            "P53_14samples_collapsed_symbols.zip":
-                diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/metrics/metric_Diff_of_Means_test/P53_14samples_collapsed_symbols.zip"
+            "stderr.txt":
+                diffCmd: ../grepMessage.sh xtools.api.param.BadParamException:.Too.few.samples.in.class.B.of.the.dataset.to.use.this.metric
+                # The following file is unused; keeping it just for reference.
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/phenotype_cls/too_few_samples_gene_set_perm_test/stderr.txt"

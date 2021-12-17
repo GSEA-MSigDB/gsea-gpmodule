@@ -13,7 +13,7 @@ params:
        collapse.dataset: "No_Collapse"
        #chip.platform.file: 
        # Renaming result file for ease of testing.
-       output.file.name: "Ross_et_al.zip"
+       output.file.name: "Ross_et_al.3-class.zip"
        scoring.scheme: "weighted"
        metric.for.ranking.genes: "Signal2Noise"
        gene.list.sorting.mode: "real"
@@ -40,6 +40,6 @@ params:
 assertions:
         jobStatus: success
         files:
-            "Ross_et_al.zip":
+            "Ross_et_al.3-class.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/Ross_et_al.3-class_test/Ross_et_al.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/breadthTest/output/other/Ross_et_al.3-class_test/Ross_et_al.3-class.zip"

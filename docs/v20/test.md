@@ -1,4 +1,4 @@
-# GSEA (v20.2.x)
+# GSEA (v20.3.x)
 
 Gene Set Enrichment Analysis
 
@@ -14,7 +14,7 @@ for GSEA questions.
 team](http://software.broadinstitute.org/cancer/software/genepattern/contact)
 for GenePattern issues.
 
-**GSEA Version:** 4.1.0
+**GSEA Version:** 4.2.0
 
 ## Description
 
@@ -301,6 +301,9 @@ For descriptions of the ranking metrics, see <a href="http://www.gsea-msigdb.org
 <li>Median_of_probes: For each sample, use the median expression value for the probe set.</li>
 <li>Mean_of_probes: For each sample, use the mean expression value for the probe set.</li>
 <li>Sum_of_probes: For each sample, sum all the expression values of the probe set.</li>
+<li>Abs_max_of_probes: For each sample, use the expression value for the probe set with the maximum **absolute value**.  Note that each value retains its original sign but is chosen based on absolute value.
+In other words, the largest magnitude value is used.  While this method is useful with computational-based input datasets it is generally **not recommended** for use with quantification-based expression 
+measures such as counts or microarray fluorescence.</li>
 </ul></td>
 </tr>
 <tr class="even">
@@ -367,10 +370,6 @@ For descriptions of the ranking metrics, see <a href="http://www.gsea-msigdb.org
 <td align="left">create gcts <span style="color:red;">*</span></td>
 <td align="left">Whether to save the dataset subsets backing the GSEA report heatmaps as GCT files; these will be subsets of your original dataset corresponding only to the genes of the heatmap. </td>
 </tr>
-<tr class="even">
-<td align="left">create zip <span style="color:red;">*</span></td>
-<td align="left">Create a ZIP bundle of the output files. This is true by default, matching the former behavior where a ZIP bundle was always created.</td>
-</tr>
 </tbody>
 </table>
 
@@ -423,16 +422,14 @@ drop-down
 
 ## Output Files
 
-1\. Optional Enrichment Report archive: ZIP
+1\. Enrichment Report archive: ZIP
 
 ZIP file containing the result files.  For more information on
 interpreting these results, see [Interpreting GSEA
 Results](http://www.gsea-msigdb.org/gsea/doc/GSEAUserGuideTEXT.htm#_Interpreting_GSEA_Results)
 in the GSEA User Guide. Note that in prior versions the ZIP bundle was
 created as the only output file. This behavior has been changed to give
-direct access to the results without the need for a download. The
-default is to create the ZIP bundle, matching the former behavior, but
-the report files will always be created directly.
+direct access to the results without the need for a download.
 
 2\. Enrichment Report: HTML and PNG images
 
@@ -450,6 +447,8 @@ can be decompressed using 'gunzip' on Mac or Linux and 7-Zip on Windows
 The datasets backing all the heatmap images from the Enrichment Report
 for use in external visualizers or analysis tools. These will have the
 same name as the corresponding image but instead with a GCT extension.
+When Collapse or Remap_Only is set, the collapsed dataset is also saved 
+as a GCT.  These files will be created if the Create GCTs option is true.
 
 ## Platform Dependencies
 
@@ -476,6 +475,11 @@ Java
 </tr>
 </thead>
 <tbody>
+<tr class="even">
+<td align="left">20.3.0</td>
+<td align="left">2021-12-17</td>
+<td align="left">Updated with the GSEA Desktop 4.2.0 code base with numerous bug fixes. Adds the Abs_max_of_probes collapse mode. Fixed some issues handling datasets with missing values. Added the Spearman metric. Fixed issue with the min-sample check with gene_set permutation mode. Improved warnings and logging. Changed the FDR q-value scale on the NES vs Significance plot. Fixed bugs in weighted_p1.5 scoring.</td>
+</tr>
 <tr class="odd">
 <td align="left">20.2.4</td>
 <td align="left">2021-4-22</td>

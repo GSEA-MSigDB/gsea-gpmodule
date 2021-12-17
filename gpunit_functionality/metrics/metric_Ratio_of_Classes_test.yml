@@ -1,8 +1,8 @@
-# Copyright (c) 2003-2019 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
-#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00072:20
+# Copyright (c) 2003-2021 Broad Institute, Inc., Massachusetts Institute of Technology, and Regents of the University of California.  All rights reserved.
+#module: urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:000142:15
 module: GSEA
-name: GSEA metric_log2_ratio_of_means_test
-description: Test GSEA using the log2_Ratio_of_Classes metric.  Variation of user_gene_set_test with a reduced dataset.
+name: GSEA metric_Ratio_of_Classes_test
+description: Test GSEA using the Ratio_of_Classes metric.  Variation of user_gene_set_test with a reduced dataset.
 params:
        expression.dataset: "<%gpunit.testData%>gpunit/GSEA/v20/input/P53_14samples_collapsed_symbols.gct"
        gene.sets.database: [ "<%gpunit.testData%>gpunit/GSEA/v20/input/c1.symbols.reduced.gmt" ]
@@ -14,7 +14,7 @@ params:
        #chip.platform.file: 
        output.file.name: "<expression.dataset_basename>.zip"
        scoring.scheme: "weighted"
-       metric.for.ranking.genes: "log2_ratio_of_means"
+       metric.for.ranking.genes: "Ratio_of_Classes"
        gene.list.sorting.mode: "real"
        gene.list.ordering.mode: "descending"
        max.gene.set.size: "500"
@@ -41,4 +41,4 @@ assertions:
         files:
             "P53_14samples_collapsed_symbols.zip":
                 diffCmd: ../diffGseaResults.sh
-                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/metrics/metric_log2_ratio_of_means_test/P53_14samples_collapsed_symbols.zip"
+                diff: "<%gpunit.resultData%>gpunit/GSEA/v20/output/metrics/metric_Ratio_of_Classes_test/P53_14samples_collapsed_symbols.zip"
