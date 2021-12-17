@@ -477,8 +477,8 @@ Java
 <tbody>
 <tr class="even">
 <td align="left">20.3.0</td>
-<td align="left">2021-11-2</td>
-<td align="left">Updated with the GSEA Desktop 4.2.0 code base with numerous bug fixes.  Adds the Abs_max_of_probes collapse mode.  Fixed some issues handling datasets with missing values.  Added the Spearman metric.  Fixed issue with the min-sample check with gene_set permutation mode.  Improved warnings and logging.  Changed the FDR q-value scale on the NES vs Significance plot.</td>
+<td align="left">2021-12-17</td>
+<td align="left">Updated with the GSEA Desktop 4.2.0 code base with numerous bug fixes. Adds the Abs_max_of_probes collapse mode. Fixed some issues handling datasets with missing values. Added the Spearman metric. Fixed issue with the min-sample check with gene_set permutation mode. Improved warnings and logging. Changed the FDR q-value scale on the NES vs Significance plot. Fixed bugs in weighted_p1.5 scoring.</td>
 </tr>
 <tr class="odd">
 <td align="left">20.2.4</td>
