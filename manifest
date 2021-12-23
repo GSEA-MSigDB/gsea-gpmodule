@@ -4,7 +4,7 @@
 JVMLevel=11
 LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00072\:999999999
 author=Aravind Subramanian, Pablo Tamayo, David Eby; Broad Institute
-commandLine=/opt/gsea/GSEA_4.2.0/gsea-cli.sh GSEA -res <expression.dataset> -cls <phenotype.labels> -collapse <collapse.dataset> -mode <collapsing.mode.for.probe.sets.with.more.than.one.match> -norm <normalization.mode> -nperm <number.of.permutations> -permute <permutation.type> -rnd_type <randomization.mode> -scoring_scheme <scoring.scheme> -metric <metric.for.ranking.genes> -sort <gene.list.sorting.mode> -order <gene.list.ordering.mode> -include_only_symbols <omit.features.with.no.symbol.match> -make_sets <make.detailed.gene.set.report> -median <median.for.class.metrics> -num <number.of.markers> -plot_top_x <plot.graphs.for.the.top.sets.of.each.phenotype> -rnd_seed <random.seed> -save_rnd_lists <save.random.ranked.lists> -set_max <max.gene.set.size> -set_min <min.gene.set.size> <chip.platform.file> -gmx_list <gene.sets.database> -create_svgs <create.svgs> -create_gcts <create.gcts> -target_profile <target.profile>  <selected.gene.sets> <output.file.name> <alt.delim> -dev_mode <dev.mode> -zip_report true -run_as_genepattern true
+commandLine=/opt/gsea/GSEA_4.2.1/gsea-cli.sh GSEA -res <expression.dataset> -cls <phenotype.labels> -collapse <collapse.dataset> -mode <collapsing.mode.for.probe.sets.with.more.than.one.match> -norm <normalization.mode> -nperm <number.of.permutations> -permute <permutation.type> -rnd_type <randomization.mode> -scoring_scheme <scoring.scheme> -metric <metric.for.ranking.genes> -sort <gene.list.sorting.mode> -order <gene.list.ordering.mode> -include_only_symbols <omit.features.with.no.symbol.match> -make_sets <make.detailed.gene.set.report> -median <median.for.class.metrics> -num <number.of.markers> -plot_top_x <plot.graphs.for.the.top.sets.of.each.phenotype> -rnd_seed <random.seed> -save_rnd_lists <save.random.ranked.lists> -set_max <max.gene.set.size> -set_min <min.gene.set.size> <chip.platform.file> -gmx_list <gene.sets.database> -create_svgs <create.svgs> -create_gcts <create.gcts> -target_profile <target.profile>  <selected.gene.sets> <output.file.name> <alt.delim> -dev_mode <dev.mode> -zip_report true -run_as_genepattern true
 cpuType=any
 taskDoc=doc.html
 description=Gene Set Enrichment Analysis.  <strong>If you are using GSEA on RNA-seq data, please read <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Using_RNA-seq_Datasets_with_GSEA" target="_blank">these guidelines</a>.</strong>
@@ -12,7 +12,7 @@ fileFormat=zip
 language=Java
 name=GSEA
 os=any
-job.docker.image=genepattern/gsea_4.2.0\:0.1
+job.docker.image=genepattern/gsea_4.2.1\:0.1
 
 
 p1_MODE=IN
@@ -417,6 +417,6 @@ serializedModel=
 taskType=Pathway Analysis
 categories=gsea;pathway analysis
 userid=eby@broadinstitute.org
-version=Updated with the GSEA Desktop 4.2.0 code base with numerous bug fixes. Adds the Abs_max_of_probes collapse mode.  Fixed some issues handling datasets with missing values.  Added the Spearman metric. Fixed issue with the min-sample check with gene_set permutation mode. Improved warnings and logging. Changed the FDR q-value scale on the NES vs Significance plot. Fixed bugs in weighted_p1.5 scoring.
+version=Updated with the GSEA Desktop 4.2.1 code base. Updated to Log4J 2.17.0. TXT file parser bug fix.
 
 publicationDate=10/05/2018 04\:51 
