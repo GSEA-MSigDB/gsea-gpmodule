@@ -475,6 +475,11 @@ Java
 </tr>
 </thead>
 <tbody>
+<tr class="even">
+<td align="left">20.3.2</td>
+<td align="left">2022-1-12</td>
+<td align="left">Updated to MSigDB v7.5.</td>
+</tr>
 <tr class="odd">
 <td align="left">20.3.1</td>
 <td align="left">2021-12-23</td>
