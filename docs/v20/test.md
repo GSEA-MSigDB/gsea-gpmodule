@@ -475,6 +475,11 @@ Java
 </tr>
 </thead>
 <tbody>
+<tr class="even">
+<td align="left">20.3.4</td>
+<td align="left">2022-1-20</td>
+<td align="left">Updated Log4J to 2.17.1.</td>
+</tr>
 <tr class="odd">
 <td align="left">20.3.3</td>
 <td align="left">2022-1-19</td>
