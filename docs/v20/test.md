@@ -475,6 +475,11 @@ Java
 </tr>
 </thead>
 <tbody>
+<tr class="odd">
+<td align="left">20.3.5</td>
+<td align="left">2022-3-22</td>
+<td align="left">Removed Log4J entirely from the code base.  Fixed weighted_p1.5 computation.  Added min dataset size warnings.</td>
+</tr>
 <tr class="even">
 <td align="left">20.3.4</td>
 <td align="left">2022-1-20</td>
