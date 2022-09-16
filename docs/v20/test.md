@@ -475,6 +475,11 @@ Java
 </tr>
 </thead>
 <tbody>
+<tr class="even">
+<td align="left">20.3.6</td>
+<td align="left">2022-9-15</td>
+<td align="left">Updated to Human MSigDB v2022.1.Hs. Direct support for Mouse MSigDB 2022.1.Mm is not yet available</td>
+</tr>
 <tr class="odd">
 <td align="left">20.3.5</td>
 <td align="left">2022-3-22</td>
