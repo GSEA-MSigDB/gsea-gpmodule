@@ -111,7 +111,6 @@ p7_value=phenotype;gene_set
 p8_MODE=IN
 p8_TYPE=FILE
 p8_choiceDir=https://www.gsea-msigdb.org/gsea/msigdb/gp_modules_chip.json
-p8_choiceDir=
 p8_default_value=
 p8_description=DNA Chip (array) annotation file from GSEA website.  Upload your own chip file if the one corresponding to your DNA Microarray platform is not listed in the drop-down menu.  A chip file is only required if collapse dataset is set to true.
 p8_fileFormat=chip
