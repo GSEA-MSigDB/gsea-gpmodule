@@ -3,7 +3,7 @@
 JVMLevel=11
 LSID=urn\:lsid\:broad.mit.edu\:cancer.software.genepattern.module.analysis\:00072\:999999999
 author=Aravind Subramanian, Pablo Tamayo, David Eby; Broad Institute
-commandLine=/opt/gsea/GSEA_4.2.3/gsea-cli.sh GSEA -res <expression.dataset> -cls <phenotype.labels> -collapse <collapse.dataset> -mode <collapsing.mode.for.probe.sets.with.more.than.one.match> -norm <normalization.mode> -nperm <number.of.permutations> -permute <permutation.type> -rnd_type <randomization.mode> -scoring_scheme <scoring.scheme> -metric <metric.for.ranking.genes> -sort <gene.list.sorting.mode> -order <gene.list.ordering.mode> -include_only_symbols <omit.features.with.no.symbol.match> -make_sets <make.detailed.gene.set.report> -median <median.for.class.metrics> -num <number.of.markers> -plot_top_x <plot.graphs.for.the.top.sets.of.each.phenotype> -rnd_seed <random.seed> -save_rnd_lists <save.random.ranked.lists> -set_max <max.gene.set.size> -set_min <min.gene.set.size> <chip.platform.file> -gmx_list <gene.sets.database> -create_svgs <create.svgs> -create_gcts <create.gcts> -target_profile <target.profile>  <selected.gene.sets> <output.file.name> <alt.delim> -dev_mode <dev.mode> -zip_report true -run_as_genepattern true
+commandLine=/opt/gsea/GSEA_4.3.2/gsea-cli.sh GSEA -res <expression.dataset> -cls <phenotype.labels> -collapse <collapse.dataset> -mode <collapsing.mode.for.probe.sets.with.more.than.one.match> -norm <normalization.mode> -nperm <number.of.permutations> -permute <permutation.type> -rnd_type <randomization.mode> -scoring_scheme <scoring.scheme> -metric <metric.for.ranking.genes> -sort <gene.list.sorting.mode> -order <gene.list.ordering.mode> -include_only_symbols <omit.features.with.no.symbol.match> -make_sets <make.detailed.gene.set.report> -median <median.for.class.metrics> -num <number.of.markers> -plot_top_x <plot.graphs.for.the.top.sets.of.each.phenotype> -rnd_seed <random.seed> -save_rnd_lists <save.random.ranked.lists> -set_max <max.gene.set.size> -set_min <min.gene.set.size> <chip.platform.file> -gmx_list <gene.sets.database> -create_svgs <create.svgs> -create_gcts <create.gcts> -target_profile <target.profile>  <selected.gene.sets> <output.file.name> <alt.delim> -dev_mode <dev.mode> -zip_report true -run_as_genepattern true
 cpuType=any
 taskDoc=doc.html
 description=Gene Set Enrichment Analysis.  <strong>If you are using GSEA on RNA-seq data, please read <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Using_RNA-seq_Datasets_with_GSEA" target="_blank">these guidelines</a>.</strong>
@@ -11,7 +11,8 @@ fileFormat=zip
 language=Java
 name=GSEA
 os=any
-job.docker.image=genepattern/gsea_4.2.3\:0.1
+job.docker.image=genepattern/gsea_4.3.2\:0.1
+job.memory=4Gb
 
 p1_MODE=IN
 p1_TYPE=FILE
@@ -28,8 +29,8 @@ p1_value=
 
 p2_MODE=IN
 p2_TYPE=FILE
-p2_choiceDir=ftp\://ftp.broadinstitute.org/pub/gsea/msigdb/human/gene_sets
-p2_choiceDirFilter=*v2022.1.Hs.symbols.gmt
+p2_choiceDir=
+p2_choiceDir=https://www.gsea-msigdb.org/gsea/msigdb/gp_modules_gmt.json
 p2_default_value=
 p2_description=Gene sets database from GSEA website. Upload a gene set if your gene set is not listed as a choice from MSigDB.
 p2_fileFormat=gmt;gmx;grp
@@ -109,8 +110,8 @@ p7_value=phenotype;gene_set
 
 p8_MODE=IN
 p8_TYPE=FILE
-p8_choiceDir=ftp\://ftp.broadinstitute.org/pub/gsea/annotations_versioned/
-p8_choiceDirFilter=*v2022.1.Hs.chip
+p8_choiceDir=https://www.gsea-msigdb.org/gsea/msigdb/gp_modules_chip.json
+p8_choiceDir=
 p8_default_value=
 p8_description=DNA Chip (array) annotation file from GSEA website.  Upload your own chip file if the one corresponding to your DNA Microarray platform is not listed in the drop-down menu.  A chip file is only required if collapse dataset is set to true.
 p8_fileFormat=chip
@@ -417,6 +418,6 @@ serializedModel=
 taskType=Pathway Analysis
 categories=gsea;pathway analysis
 userid=eby@broadinstitute.org
-version=Updated to Human MSigDB v2022.1.Hs. Direct support for Mouse MSigDB 2022.1.Mm is not yet available
+version=Updated to Human MSigDB v2022.1.Hs and Mouse MSigDB 2022.1.Mm.
 
 publicationDate=10/05/2018 04\:51 

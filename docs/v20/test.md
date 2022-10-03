@@ -1,4 +1,4 @@
-# GSEA (v20.3.x)
+# GSEA (v20.4.x)
 
 Gene Set Enrichment Analysis
 
@@ -14,7 +14,7 @@ for GSEA questions.
 team](http://software.broadinstitute.org/cancer/software/genepattern/contact)
 for GenePattern issues.
 
-**GSEA Version:** 4.2.1
+**GSEA Version:** 4.3._x_
 
 ## Description
 
@@ -476,6 +476,11 @@ Java
 </thead>
 <tbody>
 <tr class="even">
+<td align="left">20.4.0</td>
+<td align="left">2022-10-2</td>
+<td align="left">Updated to Human MSigDB v2022.1.Hs and Mouse MSigDB 2022.1.Mm.</td>
+</tr>
+<tr class="even">
 <td align="left">20.3.6</td>
 <td align="left">2022-9-15</td>
 <td align="left">Updated to Human MSigDB v2022.1.Hs. Direct support for Mouse MSigDB 2022.1.Mm is not yet available</td>
@@ -607,7 +612,7 @@ Java
 </tbody>
 </table>
 
-Copyright © 2003-2021 Broad Institute, Inc., Massachusetts Institute of
+Copyright © 2003-2022 Broad Institute, Inc., Massachusetts Institute of
 Technology, and Regents of the University of California. All rights
 reserved.
 
