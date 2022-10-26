@@ -96,7 +96,7 @@
 
 <h3>CLS Files</h3>
 
-<p>The GSEA GenePattern module interprets the sample labels in categorical <a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/cls">CLS</a> files by their order of appearance, rather than via their numerical value, unlike some other GenePattern modules. For example, in the CLS file below:</p>
+<p>The GSEA GenePattern module interprets the sample labels in categorical <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29">CLS</a> files by their order of appearance, rather than via their numerical value, unlike some other GenePattern modules. For example, in the CLS file below:</p>
 
 <p style="margin-left:.5in;"><span style="font-family:courier new,courier,monospace;">13 2 1</span></p>
 
@@ -144,14 +144,15 @@
 	<tbody>
 		<tr>
 			<td valign="top">expression dataset&nbsp;<span style="color:red;">*</span></td>
-			<td valign="top">This is a file in either <a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/gct">GCT</a> or <a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/res">RES</a> format that contains the expression dataset.&nbsp;</td>
+			<td valign="top">This is a file in either <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GCT:_Gene_Cluster_Text_file_format_.28.2A.gct.29">GCT</a> or <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RES:_ExpRESsion_.28with_P_and_A_calls.29_file_format_.28.2A.res.29">RES</a> format that contains the expression dataset.&nbsp;
+			<a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29">GSEA-specific TXT format</a> files are also accepted.</td>
 		</tr>
 		<tr>
 			<td valign="top">gene sets database&nbsp;<span style="color:red;">*</span></td>
 			<td valign="top">
 			<p>This parameter's drop-down allows you to select gene sets from the <a href="http://www.gsea-msigdb.org/gsea/msigdb/index.jsp">Molecular Signatures Database (MSigDB) </a>on the GSEA website. &nbsp;This drop-down provides access to only the most current version of MSigDB.&nbsp; You can also upload your own gene set file(s) in 
-            <a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/gmt">GMT</a>,             <a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/gmx">GMX</a>, or 
-            <a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/grp">GRP</a> format.&nbsp;</p>
+            <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29">GMT</a>,             <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMX:_Gene_MatriX_file_format_.28.2A.gmx.29">GMX</a>, or 
+            <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GRP:_Gene_set_file_format_.28.2A.grp.29">GRP</a> format.&nbsp;</p>
 
 			<p>If you want to use files from an earlier version of MSigDB you will need to download them from the archived releases on the <a href="http://www.gsea-msigdb.org/gsea/downloads.jsp">website</a>.
             </td>
@@ -163,7 +164,7 @@
 		<tr>
 			<td valign="top">phenotype labels&nbsp;<span style="color:red;">*</span></td>
 			<td valign="top">
-			<p>A phenotype label file defines categorical or continuous-valued phenotypes and for each sample in your expression dataset assigns a label or numerical value for the phenotype. &nbsp;This is a tab-delimited text file in <a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/cls">CLS</a> format.</p>
+			<p>A phenotype label file defines categorical or continuous-valued phenotypes and for each sample in your expression dataset assigns a label or numerical value for the phenotype. &nbsp;This is a tab-delimited text file in <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29">CLS</a> format.</p>
 
 			<p>A categorical phenotype CLS file should contain only two labels, such as tumor and normal.</p>
 
@@ -196,7 +197,7 @@
 		<tr>
 			<td valign="top">chip platform</td>
 			<td valign="top">
-			<p>This drop-down allows you to specify the chip annotation file, which lists each probe on a chip and its matching HUGO gene symbol, used for the expression array. &nbsp;This parameter is required if&nbsp;<em>collapse dataset&nbsp;</em>is set to true. &nbsp;The chip files listed here are from the GSEA website: <a href="http://www.gsea-msigdb.org/gsea/downloads.jsp">http://www.gsea-msigdb.org/gsea/downloads.jsp</a>. &nbsp;If you used a file not listed here, you will need to provide it (in<span style="background-color: rgb(239, 239, 239);">&nbsp;</span><a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/chip">CHIP</a>&nbsp;format) using 'Upload your own file'.</p>
+			<p>This drop-down allows you to specify the chip annotation file, which lists each probe on a chip and its matching HUGO gene symbol, used for the expression array. &nbsp;This parameter is required if&nbsp;<em>collapse dataset&nbsp;</em>is set to true. &nbsp;The chip files listed here are from the GSEA website: <a href="http://www.gsea-msigdb.org/gsea/downloads.jsp">http://www.gsea-msigdb.org/gsea/downloads.jsp</a>. &nbsp;If you used a file not listed here, you will need to provide it (in<span style="background-color: rgb(239, 239, 239);">&nbsp;</span><a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CHIP:_Chip_file_format_.28.2A.chip.29">CHIP</a>&nbsp;format) using 'Upload your own file'.</p>
 			<p>Please see the <a href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_v7.0_Release_Notes">MSigDB 7.0 Release Notes</a> for information about symbol remapping.</p>
 			</td>
 		</tr>
@@ -332,15 +333,16 @@
 				<div class="col-md-12">
 					<h2>Input Files</h2>
 
-<p>1. <em>expression dataset:&nbsp;</em><a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/gct">GCT</a> or <a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/res">RES</a> file</p>
+<p>1. <em>expression dataset:&nbsp;</em><a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GCT">GCT</a> or <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RES:_ExpRESsion_.28with_P_and_A_calls.29_file_format_.28.2A.res.29">RES</a> file.
+<a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29">GSEA-specific TXT format</a> files are also accepted.</p>
 
 <p style="margin-left: 40px;">This file contains the expression dataset.</p>
 
-<p>2. <em>gene sets database:</em>&nbsp;<a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/gmt">GMT</a>, <a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/gmx">GMX</a>, or <a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/grp">GRP</a> file.</p>
+<p>2. <em>gene sets database:</em>&nbsp;<a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29">GMT</a>, <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMX:_Gene_MatriX_file_format_.28.2A.gmx.29">GMX</a>, or <a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GRP:_Gene_set_file_format_.28.2A.grp.29">GRP</a> file.</p>
 
 <p style="margin-left: 40px;">Gene set files, either your own or from the listed MSigDB files.</p>
 
-<p>3. <em>phenotype labels:</em>&nbsp;<a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/cls">CLS</a> file</p>
+<p>3. <em>phenotype labels:</em>&nbsp;<a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#Phenotype_Data_Formats">CLS</a> file</p>
 
 <p style="margin-left: 40px;">The GSEA module supports two kinds of class (CLS) files: categorical phenotype and continuous phenotype.&nbsp;</p>
 
@@ -353,7 +355,7 @@
 	<li style="margin-left: 40px;">For a continuous phenotype representing cell viability in a time series experiment, the value for each sample is a measure of cell viability at a distinct time in the experiment.</li>
 </ul>
 
-<p>4. <em>chip platform:</em>&nbsp;an optional&nbsp;<a href="http://www.broadinstitute.org/cancer/software/genepattern/gp_guides/file-formats/sections/chip">CHIP</a> file may be provided if you do not select a <em>chip platform</em> from the drop-down</p>
+<p>4. <em>chip platform:</em>&nbsp;an optional&nbsp;<a href="https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CHIP:_Chip_file_format_.28.2A.chip.29">CHIP</a> file may be provided if you do not select a <em>chip platform</em> from the drop-down</p>
 
 <h2>Output Files</h2>
 
