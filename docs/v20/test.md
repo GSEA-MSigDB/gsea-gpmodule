@@ -202,19 +202,19 @@ for new features and other notable changes.
 
 ## Parameters
 
-- **Expression dataset**<span style="color:red;">*</span></td>
+- **Expression dataset**<span style="color:red;">*</span>
     - This is a file in either [GCT](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GCT:_Gene_Cluster_Text_file_format_.28.2A.gct.29) or [RES](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RES:_ExpRESsion_.28with_P_and_A_calls.29_file_format_.28.2A.res.29) format that contains the expression dataset.
 [GSEA-specific TXT format](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#TXT:_Text_file_format_for_expression_dataset_.28.2A.txt.29) files are also accepted.
 - **Gene sets database**<span style="color:red;">*</span>
     - This parameter's drop-down allows you to select gene sets from the [Molecular Signatures Database (MSigDB)](http://www.gsea-msigdb.org/gsea/msigdb/index.jsp) on the GSEA website. This drop-down provides access to only the most current version of MSigDB. You can also upload your own gene set file(s) in [GMT](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29), [GMX](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMX:_Gene_MatriX_file_format_.28.2A.gmx.29), or [GRP](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GRP:_Gene_set_file_format_.28.2A.grp.29) format.
-If you want to use files from an earlier version of MSigDB you will need to download them from the archived releases on the <a href="http://www.gsea-msigdb.org/gsea/downloads.jsp">website</a>.</td>
+If you want to use files from an earlier version of MSigDB you will need to download them from the archived releases on the <a href="http://www.gsea-msigdb.org/gsea/downloads.jsp">website</a>.
 - **Number of permutations**<span style="color:red;">*</span>
     - Specifies the number of permutations to perform in assessing the statistical significance of the enrichment score. It is best to start with a small number, such as 10, in order to check that your analysis will complete successfully (e.g., ensuring you have gene sets that satisfy the minimum and maximum size requirements and that the collapsing genes to symbols works correctly). After the analysis completes successfully, run it again with a full set of permutations. The recommended number of permutations is 1000. (Default: 1000)
 - **Phenotype labels**<span style="color:red;">*</span>
     - A phenotype label file defines categorical or continuous-valued phenotypes and for each sample in your expression dataset assigns a label or numerical value for the phenotype. This is a tab-delimited text file in [CLS](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#CLS:_Categorical_.28e.g_tumor_vs_normal.29_class_file_format_.28.2A.cls.29) format. 
     - A categorical phenotype CLS file should contain only two labels, such as tumor and normal. 
     - A continuous phenotype CLS file may define one or more continuous-valued phenotypes. Each phenotype definition includes a profile, assigning a numerical value to each sample in the expression dataset.
-    - GSEA interprets CLS files differently than many GenePattern modules. See the Known Issue for more details.</td>
+    - GSEA interprets CLS files differently than many GenePattern modules. See the Known Issue for more details.
 - **Target profile**
     - Name of the target phenotype for a continuous phenotype CLS. This parameter must be left blank in the case of a categorical CLS file.
 - **Collapse dataset**<span style="color:red;">*</span>
